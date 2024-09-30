@@ -283,16 +283,16 @@ module.exports = {
   },
 
   createUser: async (req, res, next) => {
-    //Params
+    console.log(req.body)
     var lastname = req.body.lastname;
     var firstname = req.body.firstname;
     var username = req.body.username;
     var mail = req.body.email;
     var pwd1 = req.body.pwd1;
     var pwd2 = req.body.pwd2;
-    var city = req.body.location["address"]["city"];
-    var latitude = req.body.location["coords"]["latitude"];
-    var longitude = req.body.location["coords"]["longitude"];
+    var city = req.body.location.city
+    var latitude = req.body.location.latitude
+    var longitude = req.body.location.longitude
 
     //Check inputs
     var err;

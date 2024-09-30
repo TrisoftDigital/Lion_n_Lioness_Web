@@ -75,6 +75,26 @@ class Register extends Component {
               <span className="title-page">Register</span>
               <div className="card-panel">
                 <form onSubmit={this.handleSubmit}>
+                <div className="input-field col s6 name-size">
+                    <i className="material-icons prefix input-icons">
+                      person_outline
+                    </i>
+                    <input
+                      type="text"
+                      name="firstname"
+                      id="firstname-register"
+                      value={this.state.firstname}
+                      onChange={e =>
+                        this.setState({ firstname: e.target.value })
+                      }
+                      onKeyUp={this.handleFirstnameKeyUp}
+                      required
+                    />
+                    <div className="register-error">
+                      {this.state.firstnameError}
+                    </div>
+                    <label htmlFor="firstname-register">Firstname</label>
+                  </div>
                   <div className="input-field col s6 name-size">
                     <i className="material-icons prefix input-icons">
                       person_outline
@@ -95,26 +115,7 @@ class Register extends Component {
                     </div>
                     <label htmlFor="lastname-register">Lastname</label>
                   </div>
-                  <div className="input-field col s6 name-size">
-                    <i className="material-icons prefix input-icons">
-                      person_outline
-                    </i>
-                    <input
-                      type="text"
-                      name="firstname"
-                      id="firstname-register"
-                      value={this.state.firstname}
-                      onChange={e =>
-                        this.setState({ firstname: e.target.value })
-                      }
-                      onKeyUp={this.handleFirstnameKeyUp}
-                      required
-                    />
-                    <div className="register-error">
-                      {this.state.firstnameError}
-                    </div>
-                    <label htmlFor="firstname-register">Firstname</label>
-                  </div>
+            
                   <div className="input-field col s12">
                     <i className="material-icons prefix input-icons">
                       person_outline
@@ -275,54 +276,65 @@ class Register extends Component {
     this.getLocation();
   }
 
-  showPosition = pos => {
-    var options = {
+ // Mock the GeoPosition functionality using a free API
+
+showPosition = pos => {
+  // Simulate the expected structure for the user location
+  const location = {
+    latitude: pos.coords.latitude,
+    longitude: pos.coords.longitude,
+    city: "Karachi", // default city, will be replaced
+    country: "Pakistan", // default country, will be replaced
+  };
+
+  // Update the state with the location
+  this._isMounted && this.setState({ userLocation: location, locationValid: true });
+
+  // Optionally fetch the city and country based on coordinates
+  this.fetchLocationDetails(location.latitude, location.longitude);
+};
+
+errorPosition = error => {
+  // Handle error and mock a default location
+  const defaultLocation = {
+    latitude: 24.8607,
+    longitude: 67.0011,
+    city: "Karachi",
+    country: "Pakistan"
+  };
+
+  this._isMounted && this.setState({ userLocation: defaultLocation, locationValid: false });
+};
+
+fetchLocationDetails = (latitude, longitude) => {
+  // Example using IP-API to get location details
+  fetch(`http://ip-api.com/json`)
+    .then(response => response.json())
+    .then(data => {
+      const locationDetails = {
+        latitude: data.lat,
+        longitude: data.lon,
+        city: data.city,
+        country: data.country
+      };
+      this._isMounted && this.setState({ userLocation: locationDetails });
+    })
+    .catch(error => {
+      console.error("Error fetching location details:", error);
+    });
+};
+
+getLocation = () => {
+  navigator.geolocation.getCurrentPosition(
+    this.showPosition,
+    this.errorPosition,
+    {
       enableHighAccuracy: true,
-      desiredAccuracy: 30,
       timeout: 5000,
-      maximumWait: 5000,
       maximumAge: 0,
-      fallbackToIP: true,
-      addressLookup: true
-    };
-    GeoPosition.locate(options, (err, location) => {
-      // console.log(err || location);
-      this._isMounted &&
-        this.setState({ userLocation: location, locationValid: true });
-    });
-  };
-
-  errorPosition = error => {
-    var options = {
-      homeMobileCountryCode: 208,
-      homeMobileNetworkCode: 1,
-      carrier: "Orange",
-      radioType: GeoPosition.RadioType.GSM,
-      fallbackToIP: true,
-      addressLookup: true,
-      timezone: false
-    };
-    GeoPosition.locateByMobile(options, (err, location) => {
-      //console.log(err || location);
-      this._isMounted &&
-        this.setState({ userLocation: location, locationValid: true });
-    });
-  };
-
-  getLocation = () => {
-    GeoPosition.config({
-      language: "en",
-      google: {
-        version: "3",
-        key: "AIzaSyCrQGnPtopWTSK9joyPAxlEGcl535KlQQQ"
-      }
-    });
-
-    navigator.geolocation.getCurrentPosition(
-      this.showPosition,
-      this.errorPosition
-    );
-  };
+    }
+  );
+};
 
   handleFirstnameKeyUp = e => {
     let result = ValidateInput.user.firstname(e.target.value);

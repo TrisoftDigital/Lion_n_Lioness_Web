@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Autocomplete, Button, Icon } from "react-materialize";
-import GeoPosition from "geolocator";
 import InfoToast from "../../services/InfoToastService";
 import ErrorToast from "../../services/ErrorToastService";
 import cities from "../../assets/data-json/cities";
@@ -23,7 +22,7 @@ class SelectLocation extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    await this.initGeolocator();
+    // Check for existing location data
     if (
       this.props.userConnectedData.geo_lat &&
       this.props.userConnectedData.geo_long
@@ -32,7 +31,7 @@ class SelectLocation extends Component {
         this.props.userConnectedData.geo_lat,
         this.props.userConnectedData.geo_long
       );
-      (await this._isMounted) &&
+      this._isMounted &&
         this.setState({
           lat: this.props.userConnectedData.geo_lat,
           long: this.props.userConnectedData.geo_long
@@ -61,62 +60,6 @@ class SelectLocation extends Component {
     }
   }
 
-  initGeolocator = () => {
-    GeoPosition.config({
-      language: "en",
-      google: {
-        version: "3",
-        key: "AIzaSyCrQGnPtopWTSK9joyPAxlEGcl535KlQQQ"
-      }
-    });
-  };
-
-  showPosition = pos => {
-    var options = {
-      enableHighAccuracy: true,
-      desiredAccuracy: 30,
-      timeout: 5000,
-      maximumWait: 5000,
-      maximumAge: 0,
-      fallbackToIP: true,
-      addressLookup: true
-    };
-    GeoPosition.locate(options, (err, location) => {
-      //console.log(err || location);
-      this._isMounted &&
-        this.setState({
-          userLocation: location,
-          city: location.address.city,
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          locationValid: true
-        });
-    });
-  };
-
-  errorPosition = error => {
-    var options = {
-      homeMobileCountryCode: 208,
-      homeMobileNetworkCode: 1,
-      carrier: "Orange",
-      radioType: GeoPosition.RadioType.GSM,
-      fallbackToIP: true,
-      addressLookup: true,
-      timezone: false
-    };
-    GeoPosition.locateByMobile(options, (err, location) => {
-      //console.log(err || location);
-      this._isMounted &&
-        this.setState({
-          userLocation: location,
-          city: location.address.city,
-          lat: location.coords.latitude,
-          long: location.coords.longitude,
-          locationValid: true
-        });
-    });
-  };
-
   getLocation = () => {
     navigator.geolocation.getCurrentPosition(
       this.showPosition,
@@ -124,35 +67,98 @@ class SelectLocation extends Component {
     );
   };
 
-  getCityFromLatLong = (lat, long) => {
-    const coords = {
-      latitude: lat,
-      longitude: long
-    };
+  showPosition = pos => {
+    const latitude = pos.coords.latitude;
+    const longitude = pos.coords.longitude;
 
-    GeoPosition.reverseGeocode(coords, (err, location) => {
-      if (location !== null)
-        this._isMounted && this.setState({ city: location.address.city });
-      else
-        ErrorToast.custom.error(
-          "Couldn't get city from coordinates, please try again later...",
-          1400
-        );
+    this.setState({
+      lat: latitude,
+      long: longitude
     });
+
+    this.fetchLocationDetails(latitude, longitude);
+  };
+
+  errorPosition = error => {
+    // Default location when geolocation fails
+    const defaultLocation = {
+      latitude: 24.8607,
+      longitude: 67.0011, // Karachi
+    };
+    this.setState({
+      lat: defaultLocation.latitude,
+      long: defaultLocation.longitude
+    });
+
+    // Fetch city from the default coordinates
+    this.fetchLocationDetails(defaultLocation.latitude, defaultLocation.longitude);
+  };
+
+  fetchLocationDetails = (latitude, longitude) => {
+    // Use IP-API to get location details
+    fetch(`http://ip-api.com/json`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          this._isMounted && this.setState({
+            city: data.city,
+            lat: data.lat,
+            long: data.lon
+          });
+        } else {
+          ErrorToast.custom.error(
+            "Couldn't get city from coordinates, please try again later...",
+            1400
+          );
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching location details:", error);
+        ErrorToast.custom.error("Couldn't fetch location details", 1400);
+      });
+  };
+
+  getCityFromLatLong = (lat, long) => {
+
+    // Call IP-API for reverse geocoding
+    fetch(`http://ip-api.com/json`)
+      .then(response => response.json())
+      .then(data => {
+      console.log(data)
+        if (data.status === "success") {
+          this._isMounted && this.setState({ city: data.city });
+        
+        } else {
+          ErrorToast.custom.error(
+            "Couldn't get city from coordinates, please try again later...",
+            1400
+          );
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching city from coordinates:", error);
+      });
   };
 
   getLatLongFromCity = city => {
-    GeoPosition.geocode(city, (err, location) => {
-      //console.log(err || location);
-      if (location !== null && location.coords.longitude !== null) {
-        this._isMounted &&
-          this.setState({
-            city: city,
-            lat: location.coords.latitude,
-            long: location.coords.longitude
-          });
-      }
-    });
+    // Call IP-API for geocoding
+    fetch(`http://ip-api.com/json/${city}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success" && data.lat && data.lon) {
+          this._isMounted &&
+            this.setState({
+              city: city,
+              lat: data.lat,
+              long: data.lon
+            });
+        } else {
+          ErrorToast.custom.error("City not found, please try again...", 1400);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching lat/long from city:", error);
+      });
   };
 
   showEditLocation = () => {
@@ -265,3 +271,4 @@ export default connect(
   mapStateToProps,
   actionCreators
 )(SelectLocation);
+

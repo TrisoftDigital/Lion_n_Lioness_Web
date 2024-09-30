@@ -2,6 +2,10 @@ let nodemailer = require("nodemailer");
 
 module.exports = {
   registerMail: (mail, username, link) => {
+        // Ensure the link uses HTTP instead of HTTPS for localhost
+        if (link.includes('localhost')) {
+          link = link.replace('https://', 'http://');
+        }
     var message =
       `
     <html>
@@ -23,26 +27,38 @@ module.exports = {
       </body>
     </html>`;
 
+    // Use SMTP transport instead of sendmail
     let transporter = nodemailer.createTransport({
-      sendmail: true,
-      newline: "unix",
-      path: "/usr/sbin/sendmail"
+      service: 'gmail',
+      auth: {
+        user: 'ahsanayaz17193@gmail.com',  // Your Gmail account
+        pass: 'lgtq ttle qiar xlyq'      // Your app-specific password (not regular Gmail password)
+      }
     });
+
     transporter.sendMail(
       {
-        from: "registration@matcha.com",
+        from: "registration@ahsanayaz17193",
         to: mail,
         subject: "Welcome to Matcha",
         html: message,
         contentType: "text/html"
       },
       (err, info) => {
-        //console.log(info.envelope);
+        if (err) {
+          console.error("Error sending email:", err);
+        } else {
+          console.log("Email sent successfully:", info);
+        }
       }
     );
   },
 
   forgotPasswordMail: (mail, username, link) => {
+        // Ensure the link uses HTTP instead of HTTPS for localhost
+        if (link.includes('localhost')) {
+          link = link.replace('https://', 'http://');
+        }
     var message =
       `
     <html>
@@ -64,21 +80,29 @@ module.exports = {
       </body>
     </html>`;
 
+    // Use SMTP transport instead of sendmail
     let transporter = nodemailer.createTransport({
-      sendmail: true,
-      newline: "unix",
-      path: "/usr/sbin/sendmail"
+      service: 'gmail',
+      auth: {
+        user: 'ahsanayaz17193@gmail.com',  // Your Gmail account
+        pass: 'lgtq ttle qiar xlyq'       // Your app-specific password
+      }
     });
+  
     transporter.sendMail(
       {
-        from: "noreply@matcha.com",
+        from: "noreply@ahsanayaz17193",
         to: mail,
         subject: "Matcha - Reset password",
         html: message,
         contentType: "text/html"
       },
       (err, info) => {
-        console.log(info.envelope);
+        if (err) {
+          console.error("Error sending email:", err);
+        } else {
+          console.log("Email sent successfully:", info);
+        }
       }
     );
   }

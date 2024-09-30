@@ -167,8 +167,6 @@ class Login extends Component {
     this._isMounted && this.setState({ pwdError });
   };
 
-  
-
   // On user input change, update states
   handleChange = e => {
     const isLogin = e.target.name === "name";
