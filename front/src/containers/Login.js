@@ -9,8 +9,12 @@ import { BackgroundAdd } from "../components/Background";
 import ErrorToast from "../services/ErrorToastService";
 import * as actionCreators from "../actions/user-actions";
 import Logo from "../assets/heart-anim.gif";
+import { GoogleLogin } from '@react-oauth/google';
+import { googleAuthLogin } from "../http/index";
 import { connect } from "react-redux";
+import Materialize from "materialize-css";
 
+// import GoogleLogin from "./googleLogin";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -21,11 +25,59 @@ class Login extends Component {
       pwdError: "",
       loginValid: false,
       pwdValid: false,
-      responseToPost: ""
+      responseToPost: "",
     };
-    this.Auth = new AuthService();
     this._isMounted = false;
   }
+
+  // Google login success callback
+  handleGoogleSuccess = async (credentialResponse) => {
+    // console.log(credentialResponse)
+    try {
+      // Send the token to your backend for user verification or registration
+      const res = await googleAuthLogin({ credential: credentialResponse.credential });
+  
+     const data = res.data
+     console.log(data)
+      if(data.message == "User registered with success"){
+        Materialize.toast({
+          html: "User registered with success , Please verify your email",
+          displayLength: 1500,
+          classes: "rounded info-toast"
+        });
+                
+      }
+
+      if(data.message=="User logged in with success"){
+       
+        const user = data.user; // backend response
+        Axios.post("/users/login", {
+          login: user.mail.toLowerCase(),
+          pwd: user.password
+        })
+          .then(res => {
+            this._isMounted && this.setState({ responseToPost: res.status });
+            localStorage.setItem("Token", res.data["token"]);
+            this.props.getUserData(res.data["username"]);
+            this.props.history.push("/");
+          })
+          .catch(err => {
+            ErrorToast.custom.error(err.response["data"]["message"], 1400);
+          });
+
+
+      }
+      
+    } catch (error) {
+      console.error("Google login failed:", error);
+      ErrorToast.custom.error("Google login failed", 1400);
+    }
+  };
+
+  handleGoogleFailure = (error) => {
+    console.error("Google login error:", error);
+    ErrorToast.custom.error("Google login failed", 1400);
+  };
 
   render() {
     return (
@@ -92,6 +144,15 @@ class Login extends Component {
                     disabled={!this.state.loginValid || !this.state.pwdValid}
                   />
                 </form>
+                  {/* Google login button */}
+                  <GoogleLogin
+                  clientId='53925760279-cs8hnrbvmsmh1eur6f5ghjme5se9hamu.apps.googleusercontent.com' // Your Google Client ID
+                  buttonText="Sign in with Google"
+                  onSuccess={this.handleGoogleSuccess}
+                  onFailure={this.handleGoogleFailure}
+                  cookiePolicy={'single_host_origin'}
+                />
+
                 <p className="register-login-link link-left">
                   Forgot password?{" "}
                   <NavLink className="pink-link" to="/users/forgot-password">
@@ -199,6 +260,14 @@ class Login extends Component {
       });
   };
 
+  componentDidMount() {
+    this._isMounted = true;
+    BackgroundAdd();
+    if (localStorage.getItem("Token")) {
+      ErrorToast.auth.userAlreadyLogged();
+      this.props.history.replace("/");
+    }
+  }
   componentWillUnmount() {
     this._isMounted = false;
   }

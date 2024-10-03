@@ -3,33 +3,113 @@ var pictureModel = require("../models/pictureModel");
 var tagModel = require("../models/tagModel");
 var passwordHash = require("password-hash");
 var sendmail = require("../services/mailService");
-
+const pool = require('../config/database')
 module.exports = {
   getUser: async data => {
     var user = data.login;
     var pwd = data.pwd;
 
+    // Check if the incoming password looks like a hashed password by matching the hash format (e.g., sha512$...)
+    const isHashed = pwd.match(/^sha512\$\w+\$\d+\$.+/); 
+
     if (user.match(/@/)) {
-      var result = await userModel.findOne("mail", user);
-      if (result != "") {
-        var hashed = result[0]["password"];
-        if (result[0]["status"] == 0) return { error: "Inactive account" };
-        if (passwordHash.verify(pwd, hashed))
-          return { message: "Succesfully User Retrieved", userData: result };
-        else return { error: "Incorrect login/password" };
-      } else return { error: "Incorrect login/password" };
+        var result = await userModel.findOne("mail", user);
+        if (result != "") {
+            var hashed = result[0]["password"];
+            if (result[0]["status"] == 0) {
+                return { error: "Inactive account" };
+            }
+
+            // Handle based on whether the incoming password is a hash or plain text
+            if (isHashed) {
+                // Compare the hashes directly if the password is already hashed
+                if (pwd === hashed) {
+                    return { message: "Successfully User Retrieved", userData: result };
+                } else {
+                    return { error: "Incorrect login/password" };
+                }
+            } else {
+                // Verify the password using the hashing library if it's plain text
+                if (passwordHash.verify(pwd, hashed)) {
+                    return { message: "Successfully User Retrieved", userData: result };
+                } else {
+                    return { error: "Incorrect login/password" };
+                }
+            }
+        } else {
+            return { error: "Incorrect login/password" };
+        }
     } else {
-      var result = await userModel.findOne("username", user);
-      if (result != "") {
-        var hashed = result[0]["password"];
-        if (result[0]["status"] == 0) return { error: "Inactive account" };
-        if (passwordHash.verify(pwd, hashed))
-          return { message: "Succesfully User Retrieved", userData: result };
-        else return { error: "Incorrect login/password" };
-      } else return { error: "Incorrect login/password" };
+        var result = await userModel.findOne("username", user);
+        if (result != "") {
+            var hashed = result[0]["password"];
+            if (result[0]["status"] == 0) {
+                return { error: "Inactive account" };
+            }
+
+            // Handle based on whether the incoming password is a hash or plain text
+            if (isHashed) {
+                // Compare the hashes directly if the password is already hashed
+                if (pwd === hashed) {
+                    return { message: "Successfully User Retrieved", userData: result };
+                } else {
+                    return { error: "Incorrect login/password" };
+                }
+            } else {
+                // Verify the password using the hashing library if it's plain text
+                if (passwordHash.verify(pwd, hashed)) {
+                    return { message: "Successfully User Retrieved", userData: result };
+                } else {
+                    return { error: "Incorrect login/password" };
+                }
+            }
+        } else {
+            return { error: "Incorrect login/password" };
+        }
+    }
+},
+
+  // getUser: async data => {
+    
+  //   var user = data.login;
+  //   var pwd = data.pwd;
+
+  //   if (user.match(/@/)) {
+  //     var result = await userModel.findOne("mail", user);
+  //     if (result != "") {
+  //       var hashed = result[0]["password"];
+  //       if (result[0]["status"] == 0) return { error: "Inactive account" };
+  //       if (passwordHash.verify(pwd, hashed))
+  //         return { message: "Succesfully User Retrieved", userData: result };
+  //       else return { error: "Incorrect login/password" };
+  //     } else return { error: "Incorrect login/password" };
+  //   } else {
+  //     var result = await userModel.findOne("username", user);
+  //     if (result != "") {
+  //       var hashed = result[0]["password"];
+  //       if (result[0]["status"] == 0) return { error: "Inactive account" };
+  //       if (passwordHash.verify(pwd, hashed))
+  //         return { message: "Succesfully User Retrieved", userData: result };
+  //       else return { error: "Incorrect login/password" };
+  //     } else return { error: "Incorrect login/password" };
+  //   }
+  // },
+  findByEmail : async email => {
+    try {
+      const result = await pool.query({
+        sql: "SELECT * FROM users WHERE mail = ?",
+        values: [email]
+      });
+  
+      if (result.length > 0) {
+        return result[0];
+      } else {
+        return null;
+      }
+    } catch (err) {
+      throw new Error(err);
     }
   },
-
   doesUserLoginExist: async data => {
     var user = data.login;
 
@@ -140,7 +220,9 @@ module.exports = {
     }
   },
 
-  createUser: async data => {
+  createUser: async (data, isGoogleUser = false) => {
+
+    const plainPassword = data[4]
     var uniqid = (
       new Date().getTime() + Math.floor(Math.random() * 10000 + 1)
     ).toString(16);
@@ -148,7 +230,15 @@ module.exports = {
     var created = await userModel.createOne(data);
     if (created) {
       var link = "https://localhost:3000/users/register/" + uniqid;
-      await sendmail.registerMail(data[3], data[2], link);
+      if (isGoogleUser) {
+        // Send password for Google users in the registration email
+        await sendmail.registerMail(data[3], data[2], link, plainPassword);  // Send password (data[4] is pwd1)
+      } else {
+        // Send standard registration email
+        await sendmail.registerMail(data[3], data[2], link);
+      };
+
+
       return { status: "User created with success" };
     }
     return { status: "An error has occurred" };

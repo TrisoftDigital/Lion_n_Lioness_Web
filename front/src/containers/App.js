@@ -6,12 +6,11 @@ import HomeLogged from "../containers/HomeLogged";
 import "materialize-css/dist/css/materialize.min.css";
 import WithAuth from "../components/withAuth";
 import { BackgroundRemove } from "../components/Background";
-
 class App extends Component {
   componentDidMount() {
     BackgroundRemove();
   }
-
+ 
   render() {
     return (
       <div className="App">

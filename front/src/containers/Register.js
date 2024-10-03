@@ -245,7 +245,6 @@ class Register extends Component {
                       !this.state.usernameValid ||
                       !this.state.emailValid ||
                       !this.state.pwd1Valid ||
-                      !this.state.locationValid ||
                       this.state.pwd2 !== this.state.pwd1
                     }
                   />
@@ -283,8 +282,8 @@ showPosition = pos => {
   const location = {
     latitude: pos.coords.latitude,
     longitude: pos.coords.longitude,
-    city: "Karachi", // default city, will be replaced
-    country: "Pakistan", // default country, will be replaced
+    city: "null", // default city, will be replaced
+    country: "null", // default country, will be replaced
   };
 
   // Update the state with the location

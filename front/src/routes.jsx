@@ -10,6 +10,8 @@ import UserProfile from "./containers/UserProfile";
 import NotFound from "./containers/NotFound";
 import Messages from "./components/messages";
 import Search from "./containers/Search";
+// import GoogleLogin from "./containers/googleLogin";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function MainRouter() {
   return (
@@ -18,6 +20,7 @@ export default function MainRouter() {
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="/users/login" component={Login} />
+          {/* <Route path="/users/google_signin" component={GoogleLogin} /> */}
           <Route exact path="/users/register" component={Register} />
           <Route path="/users/register/:key" component={ConfirmAddr} />
           <Route path="/users/forgot-password" component={ForgotPassword} />

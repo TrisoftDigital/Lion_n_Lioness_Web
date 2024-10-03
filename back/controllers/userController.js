@@ -7,9 +7,11 @@ var notifModel = require("../models/notifModel");
 var input = require("../services/inputService");
 var jwtUtils = require("../services/jwtService");
 var notifService = require("../services/notifService");
+const jwt = require('jsonwebtoken');
 
 module.exports = {
   login: async (req, res, next) => {
+    console.log(req.body)
     var user = await UserService.getUser({
       login: req.body.login,
       pwd: req.body.pwd
@@ -326,7 +328,81 @@ module.exports = {
       return res.status(201).send(ret.status);
     else return res.status(400).send(ret.status);
   },
+  
+   googleLogin :async (req, res, next) => {
+    const { credential } = req.body;
+  
+    try {
+      // Decode Google JWT token to get user details
+      const decoded = jwt.decode(credential);
+      // console.log(decoded)
+      const email = decoded.email;
+      const firstname = decoded.given_name;
+      const lastname = decoded.family_name;
+  
+      // Check if the user already exists in the system
+      const existingUser = await UserService.findByEmail(email);
+      const user = {
+        existingUser,
+        
+      }
+      
+      if (existingUser) {
+        // If user exists, log them in
+        return res.status(200).json({ message: "User logged in with success", user:existingUser , status:200 });
+      } else {
 
+        function generateRandomPassword(length) {
+          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$&!';
+          let password = '';
+          for (let i = 0; i < length; i++) {
+            password += characters.charAt(Math.floor(Math.random() * characters.length));
+          }
+          return password;
+        }
+        
+        // Example usage:
+        const randomPassword = generateRandomPassword(12);  // Generate a 12-character random password
+        // Register new user if they don't exist
+        const newUser = {
+          lastname: lastname,
+          firstname: firstname,
+          username:`${email.split('@')[0].replace(/\./g, '')}${Math.floor(1000 + Math.random() * 9000)}`,  // Using email prefix as username
+          email: email,
+          pwd1: randomPassword,  // Dummy password as we are not using it for Google users
+          pwd2: randomPassword,
+          city: null,  // You can add city if needed
+          latitude: null,
+          longitude: null,
+        };
+  
+        const createdUser = await UserService.createUser([
+          newUser.lastname,
+          newUser.firstname,
+          newUser.username,
+          newUser.email,
+          newUser.pwd1,
+          newUser.city,
+          newUser.latitude,
+          newUser.longitude,
+        ],
+        true  // Indicating this is a Google user
+
+      
+      );
+
+     
+        if (createdUser.status === "User created with success") {
+          return res.status(200).json({ message: "User registered with success", user: createdUser , status:200});
+        } else {
+          return res.status(400).json({ error: "Error creating user" });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Google login failed" });
+    }
+  },  
   getUserProfile: async (req, res, next) => {
     // Get user id from username
     var userId = await UserService.getUserIdFromUsername(req.params.username);

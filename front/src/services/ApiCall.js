@@ -1,5 +1,10 @@
 import axios from "axios";
-
+import 'dotenv/config'
+const api = axios.create({
+  baseURL:`${process.env.REACT_APP_BASE_URL}`,
+  withCredentials:true,
+  
+})
 export default {
   user: {
     getUserFromUsername: username =>
@@ -82,6 +87,9 @@ export default {
         .get(`/users/profiles-blocked/${user_id}`)
         .then(res => res.data),
     getUserListProfileDataFromId: async id =>
-      await axios.get(`/users/profile/${id}/list-profile`).then(res => res.data)
+      await axios.get(`/users/profile/${id}/list-profile`).then(res => res.data),
   }
-};
+
+
+}
+
