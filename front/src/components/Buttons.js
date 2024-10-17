@@ -36,6 +36,13 @@ class ProfileSettingsButton extends Component {
         />
         <Button
           floating
+          tooltip="post"
+          icon="account_circle"
+          className="blue modal-trigger"
+          href="#post"
+        />
+        <Button
+          floating
           tooltip="manage profiles"
           icon="supervised_user_circle"
           className="blue modal-trigger"
@@ -161,5 +168,5 @@ export {
   LikeButton,
   LikeBackButton,
   DislikeButton,
-  FilterUsersButton
+  FilterUsersButton,
 };

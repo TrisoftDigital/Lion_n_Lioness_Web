@@ -22,6 +22,46 @@ exports.router = (() => {
   userRouter
     .route("/update/:user_id/picture")
     .post(userController.updateUserPicture);
+    // ==========================post Routs=======================================
+  userRouter.route("/upload/post").post(userController.uploadPost);
+ userRouter.route("/:userid/post").get(userController.getUserPost);
+            // ============= comment==========================
+    userRouter.route("/post/comment").post(userController.postComments);
+    userRouter.route("/:postId/comment").get(userController.getComments);
+      userRouter
+        .route("/post/comment/edit/:editingCommentId")
+        .put(userController.editComments);
+        userRouter
+          .route("/post/comment/delete/:commentId")
+          .delete(userController.deleteComments);
+
+          // ===================== post like ======================
+      userRouter.route("/post/like").post(userController.sendPostLike);
+      userRouter
+        .route("/post/:postId/like/count")
+        .get(userController.getPostLikecount);
+          userRouter
+            .route("/post/delete/:postId")
+            .delete(userController.deletePost);
+       
+
+  // =============================================================
+
+
+// ====================================user preferences =======================
+
+userRouter
+  .route("/:userid/:username/preferences") 
+  .post(userController.AddandUpdatePreferences);
+  userRouter
+    .route("/:userid/preferences")
+    .get(userController.getUserPreferences);
+
+
+
+// =============================================================================
+
+
   userRouter
     .route("/update/:user_id/profile_picture")
     .post(userController.updateUserProfilePicture);

@@ -2,17 +2,26 @@ var UserService = require("../services/userService");
 var userModel = require("../models/userModel");
 var tagModel = require("../models/tagModel");
 var pictureModel = require("../models/pictureModel");
+var postLikeModel = require("../models/postLikeModel");
+var PostModel = require("../models/postModel");
+var postCommentModel = require("../models/postCommentModel");
 var likeModel = require("../models/likeModel");
+var userPreferencesModal = require("../models/userPreferencesModal")
 var notifModel = require("../models/notifModel");
 var input = require("../services/inputService");
 var jwtUtils = require("../services/jwtService");
 var notifService = require("../services/notifService");
+const { response } = require("express");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const postModel = require("../models/postModel");
 
 module.exports = {
   login: async (req, res, next) => {
     var user = await UserService.getUser({
       login: req.body.login,
-      pwd: req.body.pwd
+      pwd: req.body.pwd,
     });
 
     if (user.error) return res.status(401).json({ message: user.error });
@@ -22,7 +31,7 @@ module.exports = {
       return res.status(200).json({
         message: "Succesfully User Retrieved",
         username: username,
-        token: jwtUtils.tokenGenerator([id, username])
+        token: jwtUtils.tokenGenerator([id, username]),
       });
     }
   },
@@ -64,7 +73,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `${req.params.field} updated`
+        message: `${req.params.field} updated`,
       });
     }
   },
@@ -99,7 +108,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -114,7 +123,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -129,7 +138,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -147,7 +156,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -165,10 +174,274 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
+
+
+// ============================ Add preferences ================================
+
+AddandUpdatePreferences: async (req , res , next )=>{
+
+  try {
+    const id = req.params.userid;
+    const name = req.params.username;
+    const preferences = req.body;
+
+   
+     var result = await userPreferencesModal.preferences(
+       id,
+       name ,
+       preferences
+     );
+    res.send({ status: 200 });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: 500, message: "Internal Server Error" });
+    
+  }
+
+},
+getUserPreferences : async (req , res , next) => {
+
+  try {
+    const id = req.params.userid;
+  
+
+   
+     var result = await userPreferencesModal.getuserpreferences(
+       id
+     );
+     if (result.length > 0){
+       res.status(200).send({ status: 200, data: result });
+     }else{
+      res.status(201).send({ status: 201, data: 'no data' });
+
+     }
+      
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ status: 500, message: "Internal Server Error" });
+    
+  }
+  
+},
+
+
+
+
+
+  // ============================uplod post Controller ========================
+  uploadPost: async (req, res, next) => {
+    // Set storage engine for multer
+    const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        const dir = path.join(__dirname, "../src/uploads");
+        if (!fs.existsSync(dir)) {
+          fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+      },
+      filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname); // Rename files to avoid duplication
+      },
+    });
+
+    // Initialize multer upload
+    const upload = multer({ storage: storage }).array("images", 15); // Max 15 files
+
+    try {
+      // Handling the uploaded files
+      upload(req, res, async (err) => {
+        if (err) {
+          return res
+            .status(500)
+            .json({ message: "File upload error", error: err });
+        }
+
+        const { userid, username, Title } = req.body;
+        const imagePaths = req.files.map((file) => file.filename); // Array of file names
+
+        var result = await PostModel.CreatePost(
+          userid,
+          username,
+          Title,
+          imagePaths
+        );
+
+        if (result.error) return res.status(401).json({ error: result.error });
+        else {
+          res.send({ status: 200, data: response.body });
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error" });
+    }
+
+    // try {
+    //   console.log(req.body);
+    //   res.send({ status: 200, data: response.body });
+    // } catch (error) {
+    //   console.log(error);
+    //   res.send({ status: 500 });
+    // }
+  },
+
+  getUserPost: async (req, res, next) => {
+    try {
+      var user_id = req.params.userid;
+
+      var result = await postModel.GetPosts(user_id);
+      
+      if (result.length > 0) {
+        // Parse imagePaths for each post
+        result = result.map((post) => ({
+          ...post,
+          imagePaths: JSON.parse(post.imagePaths),
+        }));
+
+        res.send({ status: 200, data: result });
+      } else {
+        res.send({ status: 404, message: "No posts found for the user" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+
+  // ================== post comment=========================
+  postComments: async (req, res, next) => {
+    try {
+      const { userid, username, image, postid, comment } = req.body;
+      console.log(userid);
+      console.log(username);
+      console.log(postid);
+      console.log(comment);
+
+      var result = await postCommentModel.CreateComment(
+        userid,
+        username,
+        image,
+        postid,
+        comment
+      );
+      if (result) {
+        res.send({ status: 200, data: req.body });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+  deletePost: async (req, res, next) => {
+    const postid = req.params.postId;
+      console.log(postid);
+    try {
+      var result = await postModel.deletePost(postid);
+      if (result) {
+        res.send({ status: 200 });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+
+  // =============== get comment by postId==========================
+
+  getComments: async (req, res, next) => {
+    try {
+      var post_id = req.params.postId;
+
+      var result = await postCommentModel.GetComment(post_id);
+
+      if (result.length > 0) {
+        res.send({ status: 200, data: result });
+      } else {
+        res;
+        res.send({ status: 200, data: "no comments yet" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+  editComments: async (req, res, next) => {
+    try {
+      var commentid = req.params.editingCommentId;
+      var comment = req.body.comment;
+      console.log(commentid, comment);
+
+      var result = await postCommentModel.updateComment(commentid, comment);
+
+      if (result) {
+        res.send({ status: 200 });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+
+  deleteComments: async (req, res, next) => {
+    try {
+      var commentid = req.params.commentId;
+
+      var result = await postCommentModel.deleteComment(commentid);
+
+      if (result) {
+        res.send({ status: 200 });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ status: 500, message: "Internal Server Error" });
+    }
+  },
+
+  // ======================== post like ================================
+
+  sendPostLike: async (req, res, next) => {
+    const { id_who_like, name_who_like, image, postid } = req.body;
+
+    try {
+      const result = await postLikeModel.post_like_dislike(
+        id_who_like,
+        name_who_like,
+        image,
+        postid
+      );
+
+      if (result) {
+        res.send({ status: 200 });
+      } else {
+        res
+          .status(500)
+          .send({ status: 500, message: "Database operation failed" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ status: 500, message: "An error occurred" });
+    }
+  },
+  getPostLikecount: async (req, res, next) => {
+    const postid = req.params.postId;
+
+    try {
+      const result = await postLikeModel.post_like_count(postid);
+
+      res.send({ status: 200, data: result });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ status: 500, message: "An error occurred" });
+    }
+  },
+
+  // =============================================================================
 
   updateUserProfilePicture: async (req, res, next) => {
     if (isNaN(req.params.user_id)) {
@@ -184,21 +457,21 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
 
   forgotPassword: async (req, res, next) => {
     var user = await UserService.doesUserLoginExist({
-      login: req.body.login
+      login: req.body.login,
     });
 
     if (user.error) return res.status(401).json({ message: user.error });
     else {
       UserService.resetUserPassword(user.userData);
       return res.status(200).json({
-        message: "User does exist"
+        message: "User does exist",
       });
     }
   },
@@ -228,7 +501,7 @@ module.exports = {
       return res.status(401).json({ message: "Password isn't valid" });
     else {
       return res.status(200).json({
-        message: "Password is valid"
+        message: "Password is valid",
       });
     }
   },
@@ -245,7 +518,7 @@ module.exports = {
       return res.status(401).json({ message: "Couldn't update password" });
     else {
       return res.status(200).json({
-        message: "Password updated"
+        message: "Password updated",
       });
     }
   },
@@ -283,16 +556,16 @@ module.exports = {
   },
 
   createUser: async (req, res, next) => {
-    console.log(req.body)
+    console.log(req.body);
     var lastname = req.body.lastname;
     var firstname = req.body.firstname;
     var username = req.body.username;
     var mail = req.body.email;
     var pwd1 = req.body.pwd1;
     var pwd2 = req.body.pwd2;
-    var city = req.body.location.city
-    var latitude = req.body.location.latitude
-    var longitude = req.body.location.longitude
+    var city = req.body.location.city;
+    var latitude = req.body.location.latitude;
+    var longitude = req.body.location.longitude;
 
     //Check inputs
     var err;
@@ -320,7 +593,7 @@ module.exports = {
       pwd1,
       city,
       latitude,
-      longitude
+      longitude,
     ]);
     if (ret.status === "User created with success")
       return res.status(201).send(ret.status);
@@ -345,7 +618,7 @@ module.exports = {
       data: userData,
       pictures: userPictures,
       tags: userTags,
-      allTags: allTags
+      allTags: allTags,
     });
   },
 
@@ -367,7 +640,7 @@ module.exports = {
       data: userData,
       pictures: userPictures,
       tags: userTags,
-      allTags: allTags
+      allTags: allTags,
     });
   },
 
@@ -403,7 +676,7 @@ module.exports = {
     if (result) return res.status(200).json({ msg: "Notifications dismissed" });
     else
       return res.status(200).json({
-        error: "An error occurred and notifcations could not be dismissed"
+        error: "An error occurred and notifcations could not be dismissed",
       });
   },
 
@@ -427,7 +700,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -442,7 +715,7 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
     else {
       return res.status(200).json({
-        message: `User data updated`
+        message: `User data updated`,
       });
     }
   },
@@ -583,5 +856,5 @@ module.exports = {
     if (result.error) return res.status(401).json({ error: result.error });
 
     return res.status(200).json({ data: result });
-  }
+  },
 };

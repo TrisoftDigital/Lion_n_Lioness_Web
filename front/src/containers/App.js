@@ -6,6 +6,9 @@ import HomeLogged from "../containers/HomeLogged";
 import "materialize-css/dist/css/materialize.min.css";
 import WithAuth from "../components/withAuth";
 import { BackgroundRemove } from "../components/Background";
+import SideMenu from "../components/SideMenu";
+
+
 
 class App extends Component {
   componentDidMount() {
@@ -17,7 +20,12 @@ class App extends Component {
       <div className="App">
         <NavBar />
         <div>
-          <HomeLogged />
+              <div className="main">
+                <SideMenu />
+              </div>
+              <div>
+                {/* <HomeLogged /> */}
+              </div>
         </div>
       </div>
     );

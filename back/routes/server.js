@@ -1,4 +1,5 @@
 let app = require("express")();
+const express = require("express");
 var http = require("http").Server(app);
 var io = require("socket.io").listen(http);
 let bodyParser = require("body-parser");
@@ -9,6 +10,14 @@ var chatController = require("../controllers/chatController");
 var userController = require("../controllers/userController");
 var userModel = require("../models/userModel");
 var Seed = require("../config/seed");
+const path = require("path");
+const cors = require("cors");
+
+//Cors Option
+const corsOption = {
+  credentials: true,
+  origin: ["http://localhost:3000", "http://1.1.1.111:3000"],
+};
 /* Listenning port */
 
 const PORT = 8080;
@@ -16,10 +25,13 @@ const PORT = 8080;
 http.listen(PORT, () => {
   console.log("Listening on port: ", PORT);
 });
+app.use(cors(corsOption));
 
 /* Middlewares */
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
+// Serve static files from the "src/uploads" directory
+app.use("/uploads", express.static(path.join(__dirname, "../src/uploads")));
 app.use("/users/", userRoute.router);
 app.use("/chat/", chatRoute.router);
 app.use("/main/", mainRoute.router);
