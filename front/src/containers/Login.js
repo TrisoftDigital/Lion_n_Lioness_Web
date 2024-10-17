@@ -13,6 +13,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { googleAuthLogin } from "../http/index";
 import { connect } from "react-redux";
 import Materialize from "materialize-css";
+import logo from "../assets/logo1.png";
+import GoogleIcon from "../assets/google-icn.svg"
 
 // import GoogleLogin from "./googleLogin";
 class Login extends Component {
@@ -81,31 +83,25 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="App">
-        <NavBar />
-        <div className="row login-register-page">
-          <div className="col a12 m6" id="login-box">
+      <div className="App"> 
+        <div className="row login-page login-register-page">
+          <div className="form-left" id="login-box">
+          <div className="form-logo">
+              <img src={logo} alt="" />
+              </div>
+              <div className="data-form"> 
             <div className="login-header">
-              Only a few clicks away from{" "}
-              <span className="logo-header-love">
-                L
-                <img
-                  className="login-love-logo"
-                  src={Logo}
-                  alt="Logo on login"
-                />
-                ve
-              </span>
-            </div>
+            <h2 id="heading">SIGN IN Your User Account</h2>
+            </div> 
             <div className="card-panel center">
-              <i className="medium material-icons">account_box</i>
-              <span className="title-page">Log in</span>
+              {/* <i className="medium material-icons">account_box</i> */}
               <div className="card-panel">
                 <form onSubmit={this.handleSubmit}>
                   <div className="input-field">
-                    <i className="material-icons prefix input-icons">
+                    {/* <i className="material-icons prefix input-icons">
                       person_outline
-                    </i>
+                    </i> */}
+                    <label htmlFor="user-login">Username or email</label>
                     <input
                       type="text"
                       name="name"
@@ -117,12 +113,13 @@ class Login extends Component {
                       required
                     />
                     <div className="login-error">{this.state.loginError}</div>
-                    <label htmlFor="user-login">Username or email</label>
+                    
                   </div>
                   <div className="input-field">
-                    <i className="material-icons prefix input-icons">
+                    {/* <i className="material-icons prefix input-icons">
                       lock_outline
-                    </i>
+                    </i> */}
+                     <label htmlFor="pwd-login">Password</label>
                     <input
                       type="password"
                       name="pwd"
@@ -134,39 +131,45 @@ class Login extends Component {
                       required
                     />
                     <div className="login-error">{this.state.pwdError}</div>
-                    <label htmlFor="pwd-login">Password</label>
+                   
                   </div>
                   <input
                     type="submit"
                     name="submit"
-                    value="Login"
+                    value="SIGNIN"
                     className="btn"
                     disabled={!this.state.loginValid || !this.state.pwdValid}
                   />
                 </form>
-                  {/* Google login button */}
+                 <div className="form-ftr">
+                 <p className="register-login-link link-right"> 
+                  <NavLink className="white-link" to="/users/register">
+                    Create An Account
+                  </NavLink>
+                </p>
+                <p className="register-login-link link-left"> 
+                  <NavLink className="white-link" to="/users/forgot-password">
+                  Forgot password?{" "}
+                  </NavLink>
+                </p>
+                </div>
+              </div>
+              <div class="form-seprator" bis_skin_checked="1">
+                            <span>or</span>
+                        </div>
+                        {/* Google login button */}
                   <GoogleLogin
                   clientId='53925760279-cs8hnrbvmsmh1eur6f5ghjme5se9hamu.apps.googleusercontent.com' // Your Google Client ID
                   buttonText="Sign in with Google"
                   onSuccess={this.handleGoogleSuccess}
                   onFailure={this.handleGoogleFailure}
                   cookiePolicy={'single_host_origin'}
-                />
-
-                <p className="register-login-link link-left">
-                  Forgot password?{" "}
-                  <NavLink className="pink-link" to="/users/forgot-password">
-                    Click here
-                  </NavLink>
-                </p>
-                <p className="register-login-link link-right">
-                  Don't have an account yet?{" "}
-                  <NavLink className="pink-link" to="/users/register">
-                    Register
-                  </NavLink>
-                </p>
-              </div>
+                  id="google-login-btn" class="login-with-google-btn"
+                /> 
             </div>
+          </div>
+          </div>
+          <div className="signup-form-img">
           </div>
         </div>
       </div>

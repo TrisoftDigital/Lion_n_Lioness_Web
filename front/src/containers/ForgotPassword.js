@@ -7,6 +7,7 @@ import AuthService from "../services/AuthService";
 import { NavLink } from "react-router-dom";
 import ErrorToast from "../services/ErrorToastService";
 import InfoToast from "../services/InfoToastService";
+import logo from "../assets/logo1.png";
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -23,18 +24,24 @@ class ForgotPassword extends Component {
 
   render() {
     return (
-      <div className="App">
-        <NavBar />
-        <div className="row">
-          <div className="col a12 m6" id="login-box">
+      <div className="App"> 
+        <div className="row forgot-wrapper login-page login-register-page" >
+          <div className="form-left" id="login-box">
+          <div className="form-logo">
+              <img src={logo} alt="" />
+              </div>
+              <div className="login-header">
+            <h2 id="heading">FORGOT PASSWORD</h2>
+            </div> 
             <div className="card-panel center">
-              <i className="medium material-icons">lock</i>
+              {/* <i className="medium material-icons">lock</i> */}
               <div className="card-panel">
                 <form onSubmit={this.handleSubmit}>
                   <div className="input-field">
-                    <i className="material-icons prefix input-icons">
+                    {/* <i className="material-icons prefix input-icons">
                       person_outline
-                    </i>
+                    </i> */}
+                    <label htmlFor="user-login">Username or email</label>
                     <input
                       type="text"
                       name="name"
@@ -45,24 +52,26 @@ class ForgotPassword extends Component {
                       required
                     />
                     <div className="login-error">{this.state.loginError}</div>
-                    <label htmlFor="user-login">Username or email</label>
+                    
                   </div>
                   <input
                     type="submit"
                     name="submit"
-                    value="reset password"
+                    value="SEND"
                     className="btn"
                     disabled={!this.state.loginValid}
                   />
                 </form>
                 <p className="register-login-link">
                   Go back to{" "}
-                  <NavLink className="pink-link" to="/users/login">
-                    Login
+                  <NavLink className="white-link" to="/users/login">
+                    SignIn
                   </NavLink>
                 </p>
               </div>
             </div>
+          </div>
+          <div className="signup-form-img">
           </div>
         </div>
       </div>

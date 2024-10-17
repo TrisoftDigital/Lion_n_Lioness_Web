@@ -41,7 +41,7 @@ class HomeLogged extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App right-panel">
         <div className="row">
           {this.props.userConnectedData.id !== undefined &&
           (this.props.userConnectedData.gender === null ||
