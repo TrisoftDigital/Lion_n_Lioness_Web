@@ -9,6 +9,8 @@ import {
   LikeBackButton,
   DislikeButton
 } from "../components/Buttons";
+
+import Post from "../components/modals/Post";
 import ModalUserEditProfileInfo from "../components/modals/ModalUserEditProfileInfo";
 import ModalUserEditProfilePictures from "../components/modals/ModalUserEditProfilePictures";
 import ModalUserEditAccountSettings from "../components/modals/ModalUserEditAccountSettings";
@@ -35,6 +37,7 @@ import Logo from "../assets/logo.png";
 import Male from "../assets/male.png";
 import Female from "../assets/female.png";
 import io from "socket.io-client";
+import GetuserPost from "../components/post/GetuserPost";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -111,21 +114,24 @@ class UserProfile extends Component {
                         (this.state.likesProfile === true ? (
                           <div
                             className="profile-dislike"
-                            onClick={e => this.handleDislike()}
+
+                            onClick={(e) => this.handleDislike()}
                           >
                             <DislikeButton />
                           </div>
                         ) : this.state.likedByProfile === true ? (
                           <div
                             className="profile-like-back"
-                            onClick={e => this.handleLikeBack()}
+
+                            onClick={(e) => this.handleLikeBack()}
                           >
                             <LikeBackButton />
                           </div>
                         ) : (
                           <div
                             className="profile-like"
-                            onClick={e => this.handleLike()}
+                            onClick={(e) => this.handleLike()}
+
                           >
                             <LikeButton />
                           </div>
@@ -247,6 +253,10 @@ class UserProfile extends Component {
                       <ModalUserEditProfileInfo />
                     )}
                     {this.state.user.id === this.props.userConnectedData.id && (
+
+                      <Post />
+                    )}
+                    {this.state.user.id === this.props.userConnectedData.id && (
                       <ModalUserEditProfilePictures />
                     )}
                     {this.state.user.id === this.props.userConnectedData.id && (
@@ -289,6 +299,8 @@ class UserProfile extends Component {
                 {this.state.pictures !== undefined && (
                   <Pictures pictures={this.state.pictures} />
                 )}
+
+                <GetuserPost user={this.state.user} />
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
 let app = require("express")();
+const express = require("express");
 var http = require("http").Server(app);
 var io = require("socket.io").listen(http);
 let bodyParser = require("body-parser");
@@ -11,8 +12,9 @@ var userController = require("../controllers/userController");
 var userModel = require("../models/userModel");
 var Seed = require("../config/seed");
 var adminAuth = require("../middlewares/adminAuthMiddleware")
+const path = require("path");
+const cors = require("cors");
 
-const cors = require('cors');
 
 /* Listenning port */
 
@@ -21,12 +23,14 @@ const PORT = 8080;
 http.listen(PORT, () => {
   console.log("Listening on port: ", PORT);
 });
+
 //Cors Option
 const corsOption = {
   credentials:true,
   origin:['http://localhost:3000','http://1.1.1.111:3000'],
 
 } 
+
 app.use(cors(corsOption));
 
 /* Middlewares */
@@ -39,6 +43,14 @@ app.use("/admin" ,adminRoute);
 
 
 //Configuration
+
+// Serve static files from the "src/uploads" directory
+app.use("/uploads", express.static(path.join(__dirname, "../src/uploads")));
+app.use("/users/", userRoute.router);
+app.use("/chat/", chatRoute.router);
+app.use("/main/", mainRoute.router);
+
+
 app.get("/seed", (req, res) => {
   Seed.getUserSeed();
   res.send({ message: "Database created succefully" });

@@ -18,11 +18,13 @@ import MainScreen from './containers/Home/MainScreen'
 // import GoogleLogin from "./containers/googleLogin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
+
 export default function MainRouter() {
   return (
     <Router>
       <div>
         <Switch>
+
           {/* admin routes */}
           <Route exact path="/admin/login" component={AdminLogin} />
                   {/* Protected Routes */}
@@ -30,11 +32,10 @@ export default function MainRouter() {
           <PrivateRoute exact path="/admin/dashboard" component={AdminDashboard} />
 
 
-          {/* user routes */}
+          {/* <Route path="/main" component={MainScreen} />  */}
+          {/* <Route path="/users/google_signin" component={GoogleLogin} /> */}=======
           <Route exact path="/" component={App} />
           <Route path="/users/login" component={Login} />
-          <Route path="/main" component={MainScreen} /> 
-          {/* <Route path="/users/google_signin" component={GoogleLogin} /> */}
           <Route exact path="/users/register" component={Register} />
           <Route path="/users/register/:key" component={ConfirmAddr} />
           <Route path="/users/forgot-password" component={ForgotPassword} />

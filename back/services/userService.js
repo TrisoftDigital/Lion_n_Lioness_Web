@@ -4,10 +4,12 @@ var tagModel = require("../models/tagModel");
 var passwordHash = require("password-hash");
 var sendmail = require("../services/mailService");
 const pool = require('../config/database')
+
 module.exports = {
   getUser: async data => {
     var user = data.login;
     var pwd = data.pwd;
+
 
     // Check if the incoming password looks like a hashed password by matching the hash format (e.g., sha512$...)
     const isHashed = pwd.match(/^sha512\$\w+\$\d+\$.+/); 
@@ -110,6 +112,7 @@ module.exports = {
       throw new Error(err);
     }
   },
+
   doesUserLoginExist: async data => {
     var user = data.login;
 
@@ -220,9 +223,11 @@ module.exports = {
     }
   },
 
+
   createUser: async (data, isGoogleUser = false) => {
 
     const plainPassword = data[4]
+
     var uniqid = (
       new Date().getTime() + Math.floor(Math.random() * 10000 + 1)
     ).toString(16);
@@ -230,6 +235,7 @@ module.exports = {
     var created = await userModel.createOne(data);
     if (created) {
       var link = "https://localhost:3000/users/register/" + uniqid;
+
       if (isGoogleUser) {
         // Send password for Google users in the registration email
         await sendmail.registerMail(data[3], data[2], link, plainPassword);  // Send password (data[4] is pwd1)
@@ -237,7 +243,6 @@ module.exports = {
         // Send standard registration email
         await sendmail.registerMail(data[3], data[2], link);
       };
-
 
       return { status: "User created with success" };
     }

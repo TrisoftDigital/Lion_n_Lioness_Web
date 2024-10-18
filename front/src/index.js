@@ -8,6 +8,9 @@ import configureStore from "./store";
 import { getUserData } from "./actions/user-actions";
 import AuthService from "./services/AuthService";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
+
+
 const Auth = new AuthService();
 const store = configureStore();
 
@@ -21,6 +24,8 @@ render(
       <MainRouter />
 
    </GoogleOAuthProvider>
+
+
   </Provider>,
   document.getElementById("root")
 );

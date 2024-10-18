@@ -9,12 +9,14 @@ import { BackgroundAdd } from "../components/Background";
 import ErrorToast from "../services/ErrorToastService";
 import * as actionCreators from "../actions/user-actions";
 import Logo from "../assets/heart-anim.gif";
+
 import { GoogleLogin } from '@react-oauth/google';
 import { googleAuthLogin } from "../http/index";
 import { connect } from "react-redux";
 import Materialize from "materialize-css";
 
 // import GoogleLogin from "./googleLogin";
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -25,10 +27,15 @@ class Login extends Component {
       pwdError: "",
       loginValid: false,
       pwdValid: false,
-      responseToPost: "",
+      responseToPost: ""
     };
+    this.Auth = new AuthService();
     this._isMounted = false;
   }
+  //     responseToPost: "",
+  //   };
+  //   this._isMounted = false;
+  // }
 
   // Google login success callback
   handleGoogleSuccess = async (credentialResponse) => {
@@ -78,6 +85,7 @@ class Login extends Component {
     console.error("Google login error:", error);
     ErrorToast.custom.error("Google login failed", 1400);
   };
+
 
   render() {
     return (
@@ -144,6 +152,7 @@ class Login extends Component {
                     disabled={!this.state.loginValid || !this.state.pwdValid}
                   />
                 </form>
+
                   {/* Google login button */}
                   <GoogleLogin
                   clientId='53925760279-cs8hnrbvmsmh1eur6f5ghjme5se9hamu.apps.googleusercontent.com' // Your Google Client ID
@@ -152,6 +161,7 @@ class Login extends Component {
                   onFailure={this.handleGoogleFailure}
                   cookiePolicy={'single_host_origin'}
                 />
+
 
                 <p className="register-login-link link-left">
                   Forgot password?{" "}
@@ -260,6 +270,7 @@ class Login extends Component {
       });
   };
 
+
   componentDidMount() {
     this._isMounted = true;
     BackgroundAdd();
@@ -268,6 +279,7 @@ class Login extends Component {
       this.props.history.replace("/");
     }
   }
+
   componentWillUnmount() {
     this._isMounted = false;
   }

@@ -1,4 +1,5 @@
 #!/bin/sh
+
 path=$(cd $( dirname ${BASH_SOURCE[0]}) )/lionnlioness.sql;
 MYSQL_PASS=""  # Leave it empty if there's no password
 

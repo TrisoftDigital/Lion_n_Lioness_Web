@@ -256,6 +256,7 @@ class HomeLogged extends Component {
       })
       .catch(error => {
         console.log(error);
+
       });
     if (this.state.defaultTab.length) {
       this.initTab();
@@ -356,7 +357,10 @@ class HomeLogged extends Component {
         />
       ));
       return <ul>{users}</ul>;
-    } else {
+
+    } 
+    else {
+
       return (
         <div className="userlist-no-result">
           <img
@@ -389,6 +393,7 @@ const mapStateToProps = state => {
     userConnectedData: state.user.data,
     userConnectedStatus: state.user.status
   };
+
 };
 
 export default connect(mapStateToProps)(HomeLogged);

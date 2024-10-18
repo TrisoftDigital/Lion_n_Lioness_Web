@@ -14,6 +14,7 @@ module.exports = {
       throw new Error(err);
     }
   },
+
 // Query to find users by name (first name or last name)
 findUsersByName: async (name) => {
   try {
@@ -41,6 +42,7 @@ findUsersByName: async (name) => {
       throw err;
   }
 },
+
 
   getUsernameFromId: async user_id => {
     try {
@@ -273,6 +275,7 @@ findUsersByName: async (name) => {
       throw new Error(err);
     }
   },
+
  // Update user method with proper error handling and promise resolution
    // Update user method without COALESCE
    updateUser: (userId, updateData) => {
@@ -329,6 +332,7 @@ getUserById: (userId) => {
         });
     });
 },
+
   getUserScore: async target_id => {
     try {
       var result = await pool.query({
