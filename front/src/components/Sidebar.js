@@ -22,6 +22,10 @@ import HotNotif from "@material-ui/icons/Whatshot";
 import HighlightOff from "@material-ui/icons/HighlightOff";
 import Divider from "@material-ui/core/Divider";
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import PeopleIcon from '@material-ui/icons/People';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import NavBar from "./NavBar";
 import { Link } from 'react-router-dom'
 import {
   ExpansionPanel,        // Use ExpansionPanel instead of Accordion
@@ -47,34 +51,52 @@ export default function Sidebar(){
 
  
          return(
-         <div className="sidebar-wrapper left-panel">
+         <div className="sidebar-wrapper left-panel-sidebar">
+          {/* <div className="sidebar-header">
+            <div className="sidebar-logo">
+              <img src={logo} alt="" />
+            </div>
+            <div className="sidebar-icons">
+              <PeopleIcon />
+              <ExitToAppIcon />
+              <NotificationsIcon />
+            </div>
+          </div> */}
+          <NavBar />
             <div className="packages-wrapper">
+              <a href="/users/upgradeplanplatinum">
               <div className="package-item platinum-item">
               <p className="label"> Lion & Lioness <span className="platinum">Platinum</span></p>
               <span>Level up every action you take on Lionnlioness</span>
               </div>
+              </a>
+              <a href="/users/upgradeplangold">
               <div className="package-item gold-item">
               <p className="label"> Lion & Lioness <span className="gold">Gold</span></p>
               <span>Level up every action you take on Lionnlioness</span>
               </div>
+              </a> <a href="/users/upgradeplanplus">
               <div className="package-item plus-item">
               <p className="label"> Lion & Lioness <span className="plus">Plus</span></p>
               <span>Level up every action you take on Lionnlioness</span>
               </div>
+              </a> 
+              <a href="/users/upgradeonenightstand">
               <div className="package-item platinum-item">
               <p className="label"> Upgrade Your Love Life</p>
               <span>One Night Stand!</span>
               </div>
+              </a>
             </div>
               <h3>Menu</h3>
               <ul className="sidebar-links">
-                <li><a href="Posts.js">Posts <ArrowRightAltIcon  /> </a></li>
-                <li><a href="">About   <ArrowRightAltIcon  /> </a></li>
-                <li><a href="">Followers   <ArrowRightAltIcon  /> </a></li>
-                <li><a href="">Photos   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/posts">Posts <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/about">About   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/followers">Followers   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/photos">Photos   <ArrowRightAltIcon  /> </a></li>
                 <li><a href="">Find The Hotel   <ArrowRightAltIcon  /> </a></li>
-                <li><a href="">One Night Stand   <ArrowRightAltIcon  /> </a></li>
-                <li><a href="">Edit Profile Image<ArrowRightAltIcon  />    </a></li>
+                <li><a href="/users/upgradeonenightstand">One Night Stand   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/editprofileimage">Edit Profile Image<ArrowRightAltIcon  />    </a></li>
               </ul>
 
               <div class="verification-btn" bis_skin_checked="1"> <a href="https://lionnlioness-v2.devservertd.com/public/verify_gmail">Click to verify your email</a></div>

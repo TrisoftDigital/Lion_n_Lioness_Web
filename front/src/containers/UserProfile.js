@@ -81,7 +81,7 @@ class UserProfile extends Component {
         <NavBar />
         <div className="row">
           <div className="col l12 m12 s12">
-            <div className="row">
+            <div className="row user-profile-wrapper">
               <div className="col s12">
                 <div className="card">
                   <div className="card-image">

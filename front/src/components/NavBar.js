@@ -22,6 +22,7 @@ import DislikeNotif from "@material-ui/icons/ThumbDown";
 import HotNotif from "@material-ui/icons/Whatshot";
 import HighlightOff from "@material-ui/icons/HighlightOff";
 import Divider from "@material-ui/core/Divider";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const Auth = new AuthService();
 const CancelToken = Axios.CancelToken;
@@ -274,7 +275,7 @@ class NavBar extends Component {
           </li>
           <li>
             <button className="nav-buttons" onClick={logout}>
-              Log out
+              < ExitToAppIcon />
             </button>
           </li>
         </ul>
