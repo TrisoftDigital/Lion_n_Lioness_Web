@@ -25,6 +25,8 @@ import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Accordion from "./Accordion";
+import { connect } from 'react-redux';
 import NavBar from "./NavBar";
 import { Link } from 'react-router-dom'
 import {
@@ -42,7 +44,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export default function Sidebar(){
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  //  const { userConnectedData } = this.props;
   // Handle change for multi-selection
   const handleChange = (event) => {
     setSelectedOptions(event.target.value);
@@ -101,46 +103,12 @@ export default function Sidebar(){
 
               <div class="verification-btn" bis_skin_checked="1"> <a href="https://lionnlioness-v2.devservertd.com/public/verify_gmail">Click to verify your email</a></div>
               <h3>Account Settings</h3>
-              <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Expansion Panel with Multi-Select</Typography>
-
-          {/* Multi-Select inside ExpansionPanel Summary */}
-          <Select
-            multiple
-            value={selectedOptions}
-            onChange={handleChange}
-            renderValue={(selected) => selected.join(', ')}  // Display selected values as comma-separated string
-            style={{ marginLeft: 'auto' }}  // Aligns to the right
-          >
-            {/* Multi-select options with checkboxes */}
-            <MenuItem value={10}>
-              <Checkbox checked={selectedOptions.indexOf(10) > -1} />
-              <ListItemText primary="Option 1" />
-            </MenuItem>
-            <MenuItem value={20}>
-              <Checkbox checked={selectedOptions.indexOf(20) > -1} />
-              <ListItemText primary="Option 2" />
-            </MenuItem>
-            <MenuItem value={30}>
-              <Checkbox checked={selectedOptions.indexOf(30) > -1} />
-              <ListItemText primary="Option 3" />
-            </MenuItem>
-          </Select>
-        </ExpansionPanelSummary>
-
-        <ExpansionPanelDetails>
-          <Typography>
-            {/* Display selected options */}
-            You selected: {selectedOptions.length > 0 ? selectedOptions.join(', ') : 'None'}
-          </Typography>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-
+             <Accordion  />
+             <form action="" method="POST">
+                <input type="hidden" name="_token" value="eg1b2yyZYk06x3SgHGXxCWrHboY0te2WMoUeVzdU" />               
+                <input type="hidden" name="user_id" value="159" />
+                <button type="submit" class="delete-account-btn">Delete my account permanently</button>
+            </form>
             </div>
              
          )

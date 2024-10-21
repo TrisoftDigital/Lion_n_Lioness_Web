@@ -2483,6 +2483,69 @@ background-color: #2A2828;
 border-radius: 10px;
 color: #fff;
 }
+
+.accordion-sidebar-wrapper .ant-collapse-header {
+color: #fff !important;
+}
+
+.accordion-sidebar-wrapper .ant-collapse-content {
+background-color: #1C1C1C;
+}
+
+.accordion-sidebar-wrapper .ant-collapse-content-box > div > div{
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.accordion-sidebar-wrapper  :where(.css-dev-only-do-not-override-1hpnbz2).ant-collapse {
+  border: unset ;
+}
+
+.accordion-sidebar-wrapper .ant-collapse-expand-icon {
+  display: none !important;
+}
+
+.accordion-sidebar-wrapper  :where(.css-dev-only-do-not-override-1hpnbz2).ant-collapse>.ant-collapse-item {
+  border-bottom: 1px solid #353535;
+}
+
+.accordion-sidebar-wrapper .ant-collapse-content-box option{
+   color: #000 !important
+}
+
+.sidebar-wrapper .delete-account-btn{
+  display: block;
+  margin: auto;
+  border: unset !important;
+  border-bottom: 1px solid #fff !important;
+  border-radius: unset !important;
+  padding-bottom: 5px !important;
+  background-color: unset !important;
+  outline: unset !important;
+  background-color: unset !important;
+  color: #fff !important;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 16px !important;
+}
+
+.accordion-sidebar-wrapper .ant-btn.btn {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.accordion-sidebar-wrapper :where(.css-dev-only-do-not-override-1hpnbz2).ant-collapse .ant-collapse-content {
+  border-top: unset ;
+}
+
+.followers-wrapper .makeStyles-root-51 {
+background-color: transparent !important;
+}
+
+.followers-wrapper .MuiTabs-indicator {
+  display: none;
+}
 /* MEDIA QUERIES FOR RESPONSIVE */
 
 @media screen and (max-width: 1000px) {
