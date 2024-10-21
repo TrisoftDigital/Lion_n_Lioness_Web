@@ -4,7 +4,8 @@ body {
   flex-direction: column;
   font-family: "Noto Sans HK", sans-serif;
   overflow-x: hidden;
-  background-color: #171717;
+  /* background-color: #171717; */
+  background-color: #000;
 }
 
 main {
@@ -2529,6 +2530,12 @@ background-color: #1C1C1C;
   font-size: 16px !important;
 }
 
+.accordion-sidebar-wrapper {
+  background-color: #171717;
+  padding-bottom: 1rem;
+  font-size: 14px;
+}
+
 .accordion-sidebar-wrapper .ant-btn.btn {
   margin-left: auto;
   margin-right: auto;
@@ -2660,6 +2667,45 @@ background-color: transparent !important;
 
   .register-wrapper .form-ftr {
      padding: 0 10px;
+  }
+
+  .left-panel {
+     width: 100%;
+     display: none;
+  }
+
+  .right-panel, .edit-profile-img-wrapper { 
+    width: 100%; 
+  }
+
+  .posts-wrapper {
+    flex-direction: column;
+  }
+
+
+  .right-panel-wrapper .posts-wrapper .posts-left-side,
+  .right-panel-wrapper .posts-wrapper .posts-right-side {
+    width: 100%;
+  }
+  
+  .about-card-wrapper {
+    width: 100%;
+  }
+
+  .dashboard-wrapper {
+    height: 100vh ;
+  }
+  
+  .edit-profile-img-wrapper  img {
+    width: 100%;
+  }
+
+  .upgrade-plan .packages-area {
+    flex-direction: column;
+  }
+
+  .right-panel {
+    height: 100vh;
   }
 
 }
