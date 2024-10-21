@@ -10,6 +10,8 @@ import ApiCall from "../../services/ApiCall";
 import ManPicture from "../../assets/default-profile-man.jpg";
 import WomanPicture from "../../assets/default-profile-woman.jpg";
 import NoGender from "../../assets/default-profile-no-gender.png";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 class UserCard extends Component {
   constructor(props) {
@@ -161,7 +163,7 @@ class UserCard extends Component {
                         }
                   }
                 >
-                  <DislikeButton />
+                  <FavoriteBorderIcon />
                 </div>
               ) : this.state.likedByProfile === true ? (
                 <div
@@ -176,7 +178,7 @@ class UserCard extends Component {
                         }
                   }
                 >
-                  <LikeBackButton />
+                  <FavoriteIcon />
                 </div>
               ) : (
                 <div
@@ -191,7 +193,7 @@ class UserCard extends Component {
                         }
                   }
                 >
-                  <LikeButton />
+                  <FavoriteIcon />
                 </div>
               )}
             </div>
@@ -276,7 +278,7 @@ class UserCard extends Component {
               className="profile-link"
               to={"/users/profile/" + this.props.intel.username}
             >
-              SEE PROFILE
+             More Photos
             </NavLink>
           </div>
           <div className="card-reveal">

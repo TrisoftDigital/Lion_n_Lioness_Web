@@ -81,6 +81,7 @@ class UserProfile extends Component {
     if (!this.state.user.id) return null;
     return (
       <div className="App">
+<<<<<<< HEAD
         <NavBar /> 
         <div className="row" >
           <div className="col l12 m12 s12" >
@@ -88,6 +89,15 @@ class UserProfile extends Component {
               <div className="col s12"  >
                 <div className="card" >
                   <div className="card-image" >
+=======
+        <NavBar />
+        <div className="row">
+          <div className="col l12 m12 s12">
+            <div className="row user-profile-wrapper">
+              <div className="col s12">
+                <div className="card">
+                  <div className="card-image">
+>>>>>>> origin/asma_dev
                     <img
                       className="profile-background-image"
                       src={

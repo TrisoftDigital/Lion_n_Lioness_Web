@@ -93,4 +93,7 @@ export default {
 
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/asma_dev

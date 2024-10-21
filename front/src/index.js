@@ -9,9 +9,12 @@ import configureStore from "./store";
 import { getUserData } from "./actions/user-actions";
 import AuthService from "./services/AuthService";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> origin/asma_dev
 const Auth = new AuthService();
 const store = configureStore();
 
@@ -25,8 +28,11 @@ render(
       <MainRouter />
 
    </GoogleOAuthProvider>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/asma_dev
   </Provider>,
   document.getElementById("root")
 );

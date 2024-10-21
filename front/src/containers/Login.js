@@ -9,14 +9,23 @@ import { BackgroundAdd } from "../components/Background";
 import ErrorToast from "../services/ErrorToastService";
 import * as actionCreators from "../actions/user-actions";
 import Logo from "../assets/heart-anim.gif";
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/asma_dev
 import { GoogleLogin } from '@react-oauth/google';
 import { googleAuthLogin } from "../http/index";
 import { connect } from "react-redux";
 import Materialize from "materialize-css";
+<<<<<<< HEAD
 
 // import GoogleLogin from "./googleLogin";
+=======
+import logo from "../assets/logo1.png";
+import GoogleIcon from "../assets/google-icn.svg"
+>>>>>>> origin/asma_dev
 
+// import GoogleLogin from "./googleLogin";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -27,9 +36,8 @@ class Login extends Component {
       pwdError: "",
       loginValid: false,
       pwdValid: false,
-      responseToPost: ""
+      responseToPost: "",
     };
-    this.Auth = new AuthService();
     this._isMounted = false;
   }
   //     responseToPost: "",
@@ -87,33 +95,76 @@ class Login extends Component {
   };
 
 
+  // Google login success callback
+  handleGoogleSuccess = async (credentialResponse) => {
+    // console.log(credentialResponse)
+    try {
+      // Send the token to your backend for user verification or registration
+      const res = await googleAuthLogin({ credential: credentialResponse.credential });
+  
+     const data = res.data
+     console.log(data)
+      if(data.message == "User registered with success"){
+        Materialize.toast({
+          html: "User registered with success , Please verify your email",
+          displayLength: 1500,
+          classes: "rounded info-toast"
+        });
+                
+      }
+
+      if(data.message=="User logged in with success"){
+       
+        const user = data.user; // backend response
+        Axios.post("/users/login", {
+          login: user.mail.toLowerCase(),
+          pwd: user.password
+        })
+          .then(res => {
+            this._isMounted && this.setState({ responseToPost: res.status });
+            localStorage.setItem("Token", res.data["token"]);
+            this.props.getUserData(res.data["username"]);
+            this.props.history.push("/");
+          })
+          .catch(err => {
+            ErrorToast.custom.error(err.response["data"]["message"], 1400);
+          });
+
+
+      }
+      
+    } catch (error) {
+      console.error("Google login failed:", error);
+      ErrorToast.custom.error("Google login failed", 1400);
+    }
+  };
+
+  handleGoogleFailure = (error) => {
+    console.error("Google login error:", error);
+    ErrorToast.custom.error("Google login failed", 1400);
+  };
+
   render() {
     return (
-      <div className="App">
-        <NavBar />
-        <div className="row login-register-page">
-          <div className="col a12 m6" id="login-box">
+      <div className="App"> 
+        <div className="row login-page login-register-page">
+          <div className="form-left" id="login-box">
+          <div className="form-logo">
+              <img src={logo} alt="" />
+              </div>
+              <div className="data-form"> 
             <div className="login-header">
-              Only a few clicks away from{" "}
-              <span className="logo-header-love">
-                L
-                <img
-                  className="login-love-logo"
-                  src={Logo}
-                  alt="Logo on login"
-                />
-                ve
-              </span>
-            </div>
+            <h2 id="heading">SIGN IN Your User Account</h2>
+            </div> 
             <div className="card-panel center">
-              <i className="medium material-icons">account_box</i>
-              <span className="title-page">Log in</span>
+              {/* <i className="medium material-icons">account_box</i> */}
               <div className="card-panel">
                 <form onSubmit={this.handleSubmit}>
                   <div className="input-field">
-                    <i className="material-icons prefix input-icons">
+                    {/* <i className="material-icons prefix input-icons">
                       person_outline
-                    </i>
+                    </i> */}
+                    <label htmlFor="user-login">Username or email</label>
                     <input
                       type="text"
                       name="name"
@@ -125,12 +176,13 @@ class Login extends Component {
                       required
                     />
                     <div className="login-error">{this.state.loginError}</div>
-                    <label htmlFor="user-login">Username or email</label>
+                    
                   </div>
                   <div className="input-field">
-                    <i className="material-icons prefix input-icons">
+                    {/* <i className="material-icons prefix input-icons">
                       lock_outline
-                    </i>
+                    </i> */}
+                     <label htmlFor="pwd-login">Password</label>
                     <input
                       type="password"
                       name="pwd"
@@ -142,16 +194,17 @@ class Login extends Component {
                       required
                     />
                     <div className="login-error">{this.state.pwdError}</div>
-                    <label htmlFor="pwd-login">Password</label>
+                   
                   </div>
                   <input
                     type="submit"
                     name="submit"
-                    value="Login"
+                    value="SIGNIN"
                     className="btn"
                     disabled={!this.state.loginValid || !this.state.pwdValid}
                   />
                 </form>
+<<<<<<< HEAD
 
                   {/* Google login button */}
                   <GoogleLogin
@@ -164,19 +217,37 @@ class Login extends Component {
 
 
                 <p className="register-login-link link-left">
+=======
+                 <div className="form-ftr">
+                 <p className="register-login-link link-right"> 
+                  <NavLink className="white-link" to="/users/register">
+                    Create An Account
+                  </NavLink>
+                </p>
+                <p className="register-login-link link-left"> 
+                  <NavLink className="white-link" to="/users/forgot-password">
+>>>>>>> origin/asma_dev
                   Forgot password?{" "}
-                  <NavLink className="pink-link" to="/users/forgot-password">
-                    Click here
                   </NavLink>
                 </p>
-                <p className="register-login-link link-right">
-                  Don't have an account yet?{" "}
-                  <NavLink className="pink-link" to="/users/register">
-                    Register
-                  </NavLink>
-                </p>
+                </div>
               </div>
+              <div class="form-seprator" bis_skin_checked="1">
+                            <span>or</span>
+                        </div>
+                        {/* Google login button */}
+                  <GoogleLogin
+                  clientId='53925760279-cs8hnrbvmsmh1eur6f5ghjme5se9hamu.apps.googleusercontent.com' // Your Google Client ID
+                  buttonText="Sign in with Google"
+                  onSuccess={this.handleGoogleSuccess}
+                  onFailure={this.handleGoogleFailure}
+                  cookiePolicy={'single_host_origin'}
+                  id="google-login-btn" class="login-with-google-btn"
+                /> 
             </div>
+          </div>
+          </div>
+          <div className="signup-form-img">
           </div>
         </div>
       </div>
@@ -270,7 +341,10 @@ class Login extends Component {
       });
   };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/asma_dev
   componentDidMount() {
     this._isMounted = true;
     BackgroundAdd();
@@ -279,7 +353,10 @@ class Login extends Component {
       this.props.history.replace("/");
     }
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/asma_dev
   componentWillUnmount() {
     this._isMounted = false;
   }

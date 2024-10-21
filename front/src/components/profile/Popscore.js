@@ -12,7 +12,7 @@ class Popscore extends Component {
     };
 
     return (
-      <div>
+      <div className="popscore-wrapper">
         <span className="popscore" style={popStyle}>
           {this.props.popscore}°
         </span>

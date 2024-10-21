@@ -34,7 +34,10 @@ module.exports = {
         </body>
       </html>`;
   
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/asma_dev
     // Use SMTP transport instead of sendmail
     let transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -43,8 +46,12 @@ module.exports = {
         pass: 'lgtq ttle qiar xlyq'      // Your app-specific password (not regular Gmail password)
       }
     });
+<<<<<<< HEAD
 
 
+=======
+  
+>>>>>>> origin/asma_dev
     transporter.sendMail(
       {
         from: "registration@ahsanayaz17193",
@@ -62,7 +69,7 @@ module.exports = {
       }
     );
   },
-
+  
   forgotPasswordMail: (mail, username, link) => {
         // Ensure the link uses HTTP instead of HTTPS for localhost
         if (link.includes('localhost')) {

@@ -12,7 +12,9 @@ import ErrorToast from "../services/ErrorToastService";
 import InfoToast from "../services/InfoToastService";
 import Logo from "../assets/heart-anim.gif";
 import ValidateInput from "../validation/ValidateInput";
-
+import logo from "../assets/logo1.png";
+import GoogleIcon from "../assets/google-icn.svg"
+ 
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -50,35 +52,28 @@ class Register extends Component {
   render() {
     return (
       <div className="App">
-        <NavBar />
+        {/* <NavBar /> */}
         {this.state.responseToPost === "success" ? (
           <div className="msg msg-info z-depth-3">Bravo!</div>
         ) : (
           ""
         )}
-        <div className="row login-register-page">
-          <div className="col a12 m6" id="login-box">
+        <div className="row register-wrapper login-register-page">
+          <div className="col-md-6 col-g-6 col-12 form-left" id="login-box">
+          <div className="form-logo">
+              <img src={logo} alt="" />
+              </div>
             <div className="login-header">
-              Register cause all you need is{" "}
-              <span className="logo-header-love">
-                L
-                <img
-                  className="login-love-logo"
-                  src={Logo}
-                  alt="Logo on login"
-                />
-                ve
-              </span>
+            <h2 id="heading">Sign Up Your User Account</h2>
             </div>
             <div className="card-panel center">
-              <i className="medium material-icons">person_add</i>
-              <span className="title-page">Register</span>
+              {/* <i className="medium material-icons">person_add</i> */}
+              {/* <span className="title-page">Register</span> */}
               <div className="card-panel">
                 <form onSubmit={this.handleSubmit}>
+                <div className="row-wrapper">
                 <div className="input-field col s6 name-size">
-                    <i className="material-icons prefix input-icons">
-                      person_outline
-                    </i>
+                <label htmlFor="firstname-register">Firstname</label>
                     <input
                       type="text"
                       name="firstname"
@@ -93,12 +88,10 @@ class Register extends Component {
                     <div className="register-error">
                       {this.state.firstnameError}
                     </div>
-                    <label htmlFor="firstname-register">Firstname</label>
+                   
                   </div>
                   <div className="input-field col s6 name-size">
-                    <i className="material-icons prefix input-icons">
-                      person_outline
-                    </i>
+                  <label htmlFor="lastname-register">Lastname</label>
                     <input
                       type="text"
                       name="lastname"
@@ -113,13 +106,11 @@ class Register extends Component {
                     <div className="register-error">
                       {this.state.lastnameError}
                     </div>
-                    <label htmlFor="lastname-register">Lastname</label>
+               
                   </div>
-            
+              </div>
                   <div className="input-field col s12">
-                    <i className="material-icons prefix input-icons">
-                      person_outline
-                    </i>
+                  <label htmlFor="username-register">Username</label>
                     <input
                       type="text"
                       name="username"
@@ -135,12 +126,10 @@ class Register extends Component {
                     <div className="register-error">
                       {this.state.usernameError}
                     </div>
-                    <label htmlFor="username-register">Username</label>
+                    
                   </div>
                   <div className="input-field col s12">
-                    <i className="material-icons prefix input-icons">
-                      mail_outline
-                    </i>
+                  <label htmlFor="email-register">Email</label>
                     <input
                       type="email"
                       name="email"
@@ -153,12 +142,10 @@ class Register extends Component {
                     <div className="register-error">
                       {this.state.emailError}
                     </div>
-                    <label htmlFor="email-register">Email</label>
+                    
                   </div>
                   <div className="input-field col s12">
-                    <i className="material-icons prefix input-icons">
-                      lock_outline
-                    </i>
+                  <label htmlFor="pwd-login">Password</label>
                     <input
                       type="password"
                       name="pwd"
@@ -214,12 +201,10 @@ class Register extends Component {
                         Minimum <b>8 characters</b>
                       </p>
                     </div>
-                    <label htmlFor="pwd-login">Password</label>
+                  
                   </div>
                   <div className="input-field col s12">
-                    <i className="material-icons prefix input-icons">
-                      lock_outline
-                    </i>
+                  <label htmlFor="rep-pwd-login">Repeat password</label>
                     <input
                       type="password"
                       name="rep-pwd"
@@ -231,13 +216,14 @@ class Register extends Component {
                       required
                     />
                     <div className="register-error">{this.state.pwd2Error}</div>
-                    <label htmlFor="rep-pwd-login">Repeat password</label>
+                    
                   </div>
                   <div id="error-back" />
+                  <div className="form-ftr">
                   <input
                     type="submit"
                     name="submit"
-                    value="Register"
+                    value="SIGN UP"
                     className="btn"
                     disabled={
                       !this.state.lastnameValid ||
@@ -245,19 +231,28 @@ class Register extends Component {
                       !this.state.usernameValid ||
                       !this.state.emailValid ||
                       !this.state.pwd1Valid ||
-                      !this.state.locationValid ||
                       this.state.pwd2 !== this.state.pwd1
                     }
                   />
-                </form>
-                <p className="register-login-link">
+                  <p className="register-login-link">
                   Already have an account?{" "}
-                  <NavLink className="pink-link" to="/users/login">
-                    Log in
+                  <NavLink className="yellow-link" to="/users/login">
+                    SIGNIN
                   </NavLink>
                 </p>
+                </div>
+                </form>
               </div>
+              <div class="form-seprator" bis_skin_checked="1">
+                            <span>or</span>
+                        </div>
+
+                        <button type="button" id="google-login-btn" class="login-with-google-btn">
+                                      <img src={GoogleIcon} />  Sign up with Google
+                                    </button>
             </div>
+          </div>
+          <div className="col-12 col-md-6 col-lg-6 signup-form-img">
           </div>
         </div>
       </div>
@@ -285,8 +280,11 @@ showPosition = pos => {
     longitude: pos.coords.longitude,
     city: "null", // default city, will be replaced
     country: "null", // default country, will be replaced
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/asma_dev
   };
 
   // Update the state with the location
