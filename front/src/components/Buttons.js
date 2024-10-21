@@ -9,28 +9,30 @@ class ProfileSettingsButton extends Component {
       <Button
         floating
         fab={{ direction: "left", hoverEnabled: false }}
-        icon="settings"
         className="blue pulse"
+       icon={<i class="material-icons">settings</i>}
         large
-      >
+        >
+            
+
         <Button
           floating
           tooltip="edit profile info"
-          icon="edit"
+          icon={<i class="material-icons">edit</i>}
           className="blue modal-trigger"
           href="#edit-profile-modal"
         />
         <Button
           floating
           tooltip="add/edit profile pictures"
-          icon="add_a_photo"
+          icon={<i class="material-icons">add_a_photo</i>}
           className="blue modal-trigger"
           href="#edit-pictures-modal"
         />
         <Button
           floating
           tooltip="edit account settings"
-          icon="account_circle"
+          icon={<i class="material-icons">account_circle</i>}
           className="blue modal-trigger"
           href="#edit-account-modal"
         />
@@ -38,14 +40,14 @@ class ProfileSettingsButton extends Component {
           floating
 
           tooltip="post"
-          icon="account_circle"
+          icon={<i class="material-icons">account_circle</i>}
           className="blue modal-trigger"
           href="#post"
         />
         <Button
           floating
           tooltip="manage profiles"
-          icon="supervised_user_circle"
+          icon={<i class="material-icons">supervised_user_circle</i>}
           className="blue modal-trigger"
           href="#user-supervise-modal"
         />
@@ -60,7 +62,7 @@ class ProfileActionsButton extends Component {
       <Button
         floating
         fab={{ direction: "left", hoverEnabled: false }}
-        icon="more_vert"
+        icon={<i class="material-icons">more_vert</i>}
         className="red pulse"
         large
       >
@@ -68,7 +70,7 @@ class ProfileActionsButton extends Component {
           <Button
             floating
             tooltip="report this user"
-            icon="report"
+            icon={<i class="material-icons">report</i>}
             className="red modal-trigger"
             href="#report-user-modal"
           />
@@ -79,7 +81,7 @@ class ProfileActionsButton extends Component {
           <Button
             floating
             tooltip="block this user"
-            icon="block"
+            icon={<i class="material-icons">block</i>}
             className="red modal-trigger"
             href="#block-user-modal"
           />
@@ -90,7 +92,7 @@ class ProfileActionsButton extends Component {
           <Button
             floating
             tooltip="Unblock this user"
-            icon="check_circle"
+            icon={<i class="material-icons">check_circle</i>}
             className="red modal-trigger"
             href="#unblock-user-modal"
           />

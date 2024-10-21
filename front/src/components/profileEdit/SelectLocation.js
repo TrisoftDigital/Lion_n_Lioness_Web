@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Autocomplete, Button, Icon } from "react-materialize";
+import { Button, Icon, TextField } from "react-materialize";
+import { Autocomplete } from "react-materialize";
 import InfoToast from "../../services/InfoToastService";
 import ErrorToast from "../../services/ErrorToastService";
 import cities from "../../assets/data-json/cities";
@@ -14,7 +15,7 @@ class SelectLocation extends Component {
       long: "",
       city: "Not set",
       cityInput: "",
-      editLocationActive: false
+      editLocationActive: false,
     };
     this.citiesJSON = cities["France"];
     this._isMounted = false;
@@ -22,7 +23,6 @@ class SelectLocation extends Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    // Check for existing location data
     if (
       this.props.userConnectedData.geo_lat &&
       this.props.userConnectedData.geo_long
@@ -34,7 +34,7 @@ class SelectLocation extends Component {
       this._isMounted &&
         this.setState({
           lat: this.props.userConnectedData.geo_lat,
-          long: this.props.userConnectedData.geo_long
+          long: this.props.userConnectedData.geo_long,
         });
     }
   }
@@ -53,7 +53,7 @@ class SelectLocation extends Component {
         {
           city: this.state.city,
           geo_lat: this.state.lat,
-          geo_long: this.state.long
+          geo_long: this.state.long,
         }
       );
       InfoToast.custom.info("Your city has been changed", 1500);
@@ -67,44 +67,42 @@ class SelectLocation extends Component {
     );
   };
 
-  showPosition = pos => {
+  showPosition = (pos) => {
     const latitude = pos.coords.latitude;
     const longitude = pos.coords.longitude;
 
     this.setState({
       lat: latitude,
-      long: longitude
+      long: longitude,
     });
 
     this.fetchLocationDetails(latitude, longitude);
   };
 
-  errorPosition = error => {
-    // Default location when geolocation fails
+  errorPosition = () => {
     const defaultLocation = {
       latitude: 24.8607,
       longitude: 67.0011, // Karachi
     };
     this.setState({
       lat: defaultLocation.latitude,
-      long: defaultLocation.longitude
+      long: defaultLocation.longitude,
     });
 
-    // Fetch city from the default coordinates
     this.fetchLocationDetails(defaultLocation.latitude, defaultLocation.longitude);
   };
 
   fetchLocationDetails = (latitude, longitude) => {
-    // Use IP-API to get location details
     fetch(`http://ip-api.com/json`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.status === "success") {
-          this._isMounted && this.setState({
-            city: data.city,
-            lat: data.lat,
-            long: data.lon
-          });
+          this._isMounted &&
+            this.setState({
+              city: data.city,
+              lat: data.lat,
+              long: data.lon,
+            });
         } else {
           ErrorToast.custom.error(
             "Couldn't get city from coordinates, please try again later...",
@@ -112,22 +110,18 @@ class SelectLocation extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching location details:", error);
         ErrorToast.custom.error("Couldn't fetch location details", 1400);
       });
   };
 
   getCityFromLatLong = (lat, long) => {
-
-    // Call IP-API for reverse geocoding
     fetch(`http://ip-api.com/json`)
-      .then(response => response.json())
-      .then(data => {
-      console.log(data)
+      .then((response) => response.json())
+      .then((data) => {
         if (data.status === "success") {
           this._isMounted && this.setState({ city: data.city });
-        
         } else {
           ErrorToast.custom.error(
             "Couldn't get city from coordinates, please try again later...",
@@ -135,28 +129,27 @@ class SelectLocation extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching city from coordinates:", error);
       });
   };
 
-  getLatLongFromCity = city => {
-    // Call IP-API for geocoding
+  getLatLongFromCity = (city) => {
     fetch(`http://ip-api.com/json/${city}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         if (data.status === "success" && data.lat && data.lon) {
           this._isMounted &&
             this.setState({
               city: city,
               lat: data.lat,
-              long: data.lon
+              long: data.lon,
             });
         } else {
           ErrorToast.custom.error("City not found, please try again...", 1400);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching lat/long from city:", error);
       });
   };
@@ -164,14 +157,14 @@ class SelectLocation extends Component {
   showEditLocation = () => {
     this._isMounted &&
       this.setState({
-        editLocationActive: true
+        editLocationActive: true,
       });
   };
 
   hideEditLocation = () => {
     this._isMounted &&
       this.setState({
-        editLocationActive: false
+        editLocationActive: false,
       });
   };
 
@@ -195,19 +188,15 @@ class SelectLocation extends Component {
 
   handleAutocompleteSubmit = () => {
     if (
-      document.querySelectorAll(".edit-location-autoc-input > input")[0].value
+      document.querySelectorAll(".edit-location-autoc-input input")[0].value
     ) {
       this.getLatLongFromCity(
-        document.querySelectorAll(".edit-location-autoc-input > input")[0].value
+        document.querySelectorAll(".edit-location-autoc-input input")[0].value
       );
       this.hideEditLocation();
     } else {
       ErrorToast.custom.error("Please enter a city", 1400);
     }
-  };
-
-  handleAutocompleteChange = () => {
-    document.querySelectorAll(".edit-location-submit")[0].disabled = true;
   };
 
   componentWillUnmount() {
@@ -219,12 +208,13 @@ class SelectLocation extends Component {
       <div className="location-container">
         {this.state.city}
         <Button
-          waves="light"
+          variant="contained"
+          color="primary"
           style={{ marginLeft: "15px" }}
           onClick={this.switchEditLocation}
+          startIcon={<Icon>edit_location</Icon>}
         >
           Edit
-          <Icon left>edit_location</Icon>
         </Button>
         {this.state.editLocationActive && (
           <div className="edit-location-input">
@@ -232,26 +222,35 @@ class SelectLocation extends Component {
               <Autocomplete
                 className="edit-location-autoc-input"
                 style={{ display: "inline-block" }}
-                options={{
-                  data: this.citiesJSON,
-                  minLength: 3,
-                  onAutocomplete: this.confirmAutoCity
-                }}
-                placeholder="Insert city here (3 letters min)"
-                icon="place"
-                onChange={this.handleAutocompleteChange}
+                options={this.citiesJSON}
+                getOptionLabel={(option) => option}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Insert city here (3 letters min)"
+                    variant="outlined"
+                    onChange={this.handleAutocompleteChange}
+                  />
+                )}
+                onChange={(_, value) => this.getLatLongFromCity(value)}
               />
               <Button
                 className="edit-location-submit"
+                variant="contained"
+                color="primary"
                 onClick={this.handleAutocompleteSubmit}
               >
                 Confirm
               </Button>
             </div>
             <p>Or</p>
-            <Button waves="light" onClick={this.geolocateMe}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.geolocateMe}
+              startIcon={<Icon>location_searching</Icon>}
+            >
               Geolocate me
-              <Icon left>location_searching</Icon>
             </Button>
           </div>
         )}
@@ -260,15 +259,11 @@ class SelectLocation extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userConnectedData: state.user.data,
-    userConnectedStatus: state.user.status
+    userConnectedStatus: state.user.status,
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actionCreators
-)(SelectLocation);
-
+export default connect(mapStateToProps, actionCreators)(SelectLocation);

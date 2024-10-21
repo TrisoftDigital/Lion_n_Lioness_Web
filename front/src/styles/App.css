@@ -9,6 +9,16 @@ body {
 main {
   flex: 1 0 auto;
 }
+.app-container {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Add styles to make the SideMenu appear on the left */
 
 .div-centered {
   padding: 20px;
@@ -501,9 +511,17 @@ input[type="email"]:not(.browser-default):focus:not([readonly]) {
 /* Profile */
 
 .card {
+
+
   overflow: visible;
 }
+.card_profile {
 
+    width: 100%;
+    position: relative;
+    background-color: white;
+
+}
 .profile-info-title {
   font-size: 25px;
   padding-bottom: 10px;

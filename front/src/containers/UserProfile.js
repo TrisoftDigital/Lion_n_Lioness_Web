@@ -81,13 +81,13 @@ class UserProfile extends Component {
     if (!this.state.user.id) return null;
     return (
       <div className="App">
-        <NavBar />
-        <div className="row">
-          <div className="col l12 m12 s12">
-            <div className="row">
-              <div className="col s12">
-                <div className="card">
-                  <div className="card-image">
+        <NavBar /> 
+        <div className="row" >
+          <div className="col l12 m12 s12" >
+            <div className="row" >
+              <div className="col s12"  >
+                <div className="card" >
+                  <div className="card-image" >
                     <img
                       className="profile-background-image"
                       src={
@@ -293,6 +293,7 @@ class UserProfile extends Component {
                     )}
                   </div>
                 </div>
+
                 <UserBio bio={this.state.user.bio} />
                 <Preferences user={this.state.user} />
                 <Interests tags={this.state.tags} />
