@@ -42,9 +42,9 @@ class Search extends Component {
         <div className="row">
           {this.props.userConnectedData.allTags !== undefined && (
             <div className="search-top">
-              <h1 className="search-title">
-                Search<i className="material-icons icon-text">search</i>
-              </h1>{" "}
+              <h4 className="search-title">
+                <span>Search</span><i className="material-icons icon-text">search</i>
+              </h4>{" "}
               <SearchCriteria
                 searchDataToParent={this.handleSearchData}
                 allTags={this.props.userConnectedData.allTags}

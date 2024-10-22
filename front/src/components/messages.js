@@ -40,7 +40,7 @@ class Messages extends Component {
     return (
       <div className="App">
         <NavBar />
-        <div className="row left align" style={{ minWidth: 100 + "%" }}>
+        <div className="row   align messages-wrapper"  >
           <div className="col s3" style={{ height: this.state.winSize }}>
             <ChatConv roomToParent={this.handleRoomData} />
           </div>

@@ -5,6 +5,7 @@ import { Col, Card } from "react-materialize";
 class SuggestionsHeader extends Component {
   render() {
     return (
+      <div className="suggestion-header-wrapper">
       <Col s={12}>
         <Card
           className="suggestions-header"
@@ -27,7 +28,7 @@ class SuggestionsHeader extends Component {
             access your profile, so make sure to personalize it!)
           </p>
         </Card>
-      </Col>
+      </Col></div>
     );
   }
 }

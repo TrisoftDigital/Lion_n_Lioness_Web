@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Collapse, Button } from "antd";
 import axios from "axios";
 import ReactSelect from "react-select";
-
+import color from "@material-ui/core/colors/amber";
 // Options for each section
 const relationshipGoals = [
   { value: "Long-term partner", label: "Long-term partner" },
@@ -267,6 +267,29 @@ const genders = [
   { value: "Two-Spirit", label: "Two-Spirit" },
 ];
 
+
+// Define your options as you already have them...
+
+const customStyles = {
+  option: (provided, state) => ({
+    ...provided,
+    boxShadow: 'none',
+    backgroundColor: state.isFocused ? '#303231' : 'white', // Change hover color here
+    color: state.isFocused ? 'white' : 'black',
+    cursor: 'pointer',
+  }),
+  control: (provided) => ({
+    ...provided,
+    boxShadow: 'none',
+    borderColor: '#d9d9d9',
+    '&:hover': {
+      borderColor: '#fff',
+       // Change border color on hover
+    },
+  }),
+};
+
+
 const Accordion = () => {
   const [goals, setGoals] = useState([]);
   const [type, setType] = useState([]);
@@ -362,11 +385,13 @@ const Accordion = () => {
       <Collapse defaultActiveKey={["1"]}>
         <Collapse.Panel header="Relationship Goals" key="1">
           <ReactSelect
+          
             isMulti
             options={relationshipGoals}
             value={goals}
             onChange={setGoals}
             placeholder="Select Relationship Goals"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Relationship Type" key="2">
@@ -376,15 +401,18 @@ const Accordion = () => {
             value={type}
             onChange={setType}
             placeholder="Select Relationship Type"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Language" key="3">
           <ReactSelect
+        
             isMulti
             options={languages}
             value={language}
             onChange={setLanguage}
             placeholder="Select Languages"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Zodiac Sign" key="4">
@@ -393,6 +421,7 @@ const Accordion = () => {
             value={zodiac}
             onChange={setZodiac}
             placeholder="Select Zodiac Sign"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Education Level" key="5">
@@ -401,6 +430,7 @@ const Accordion = () => {
             value={education}
             onChange={setEducation}
             placeholder="Select Education Level"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Want Children?" key="6">
@@ -409,6 +439,8 @@ const Accordion = () => {
             value={children}
             onChange={setChildren}
             placeholder="Select your preference"
+            styles={customStyles}
+           
           />
         </Collapse.Panel>
         <Collapse.Panel header="Personality Type" key="7">
@@ -418,6 +450,7 @@ const Accordion = () => {
             value={personality}
             onChange={setPersonality}
             placeholder="Select Personality Types"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Communication Style" key="8">
@@ -427,6 +460,7 @@ const Accordion = () => {
             value={communication}
             onChange={setCommunication}
             placeholder="Select Communication Styles"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Receive Love" key="9">
@@ -436,6 +470,7 @@ const Accordion = () => {
             value={love}
             onChange={setLove}
             placeholder="Select how you receive love"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Pets" key="10">
@@ -445,6 +480,7 @@ const Accordion = () => {
             value={pets}
             onChange={setPets}
             placeholder="Select your pets"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="How Often Do You Drink?" key="11">
@@ -454,6 +490,7 @@ const Accordion = () => {
             value={drink}
             onChange={setDrink}
             placeholder="Select drinking frequency"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="How Often Do You Smoke?" key="12">
@@ -463,6 +500,7 @@ const Accordion = () => {
             value={smoke}
             onChange={setSmoke}
             placeholder="Select smoking frequency"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Workout" key="13">
@@ -471,6 +509,7 @@ const Accordion = () => {
             value={workout}
             onChange={setWorkout}
             placeholder="Select workout frequency"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Dietary Preference" key="14">
@@ -480,6 +519,7 @@ const Accordion = () => {
             value={dietary}
             onChange={setDietary}
             placeholder="Select dietary preferences"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Social Media Activity" key="15">
@@ -489,6 +529,7 @@ const Accordion = () => {
             value={socialMedia}
             onChange={setSocialMedia}
             placeholder="Select social media activity"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Sleeping Habit" key="16">
@@ -497,6 +538,7 @@ const Accordion = () => {
             value={sleep}
             onChange={setSleep}
             placeholder="Select sleeping habit"
+            styles={customStyles}
           />
         </Collapse.Panel>
         <Collapse.Panel header="Gender" key="17">
@@ -505,12 +547,15 @@ const Accordion = () => {
             value={gender}
             onChange={setGender}
             placeholder="Select gender"
+            styles={customStyles}y
           />
         </Collapse.Panel>
       </Collapse>
+      <div className="accordion-save-btn">
       <Button type="primary" className="btn" onClick={''} style={{ marginTop: 16 }}>
         Save
       </Button>
+      </div>
     </div>
   );
 };
