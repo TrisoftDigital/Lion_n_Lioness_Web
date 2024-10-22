@@ -108,8 +108,8 @@ findUsersByName: async (name) => {
     try {
       var result = await pool.query({
         sql:
-          "INSERT INTO users (lastname, firstname, username, mail, password, city, geo_lat, geo_long, `key`) VALUES (?)",
-        values: [data]
+        "INSERT INTO users (lastname, firstname, username, mail, password, city, geo_lat, geo_long, packageName, packageId, `key`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      values: data // Spread the data array directly
       });
       return result.affectedRows;
     } catch (err) {
@@ -126,7 +126,7 @@ findUsersByName: async (name) => {
     try {
       var result = await pool.query({
         sql:
-          "INSERT INTO users (lastname, firstname, username, gender, sexual_orientation, mail, bio, birthdate, password, city, pop_score, status, last_connexion) VALUES (?)",
+          "INSERT INTO users (lastname, firstname, username, gender, sexual_orientation, mail, bio, birthdate, password, city, pop_score, status, last_connexion, packageName, packageId ) VALUES (?)",
         values: [data]
       });
       return result.insertId;

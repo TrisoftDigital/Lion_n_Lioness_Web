@@ -9,21 +9,14 @@ import { BackgroundAdd } from "../components/Background";
 import ErrorToast from "../services/ErrorToastService";
 import * as actionCreators from "../actions/user-actions";
 import Logo from "../assets/heart-anim.gif";
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/asma_dev
 import { GoogleLogin } from '@react-oauth/google';
 import { googleAuthLogin } from "../http/index";
 import { connect } from "react-redux";
 import Materialize from "materialize-css";
-<<<<<<< HEAD
 
-// import GoogleLogin from "./googleLogin";
-=======
 import logo from "../assets/logo1.png";
 import GoogleIcon from "../assets/google-icn.svg"
->>>>>>> origin/asma_dev
 
 // import GoogleLogin from "./googleLogin";
 class Login extends Component {
@@ -204,20 +197,7 @@ class Login extends Component {
                     disabled={!this.state.loginValid || !this.state.pwdValid}
                   />
                 </form>
-<<<<<<< HEAD
 
-                  {/* Google login button */}
-                  <GoogleLogin
-                  clientId='53925760279-cs8hnrbvmsmh1eur6f5ghjme5se9hamu.apps.googleusercontent.com' // Your Google Client ID
-                  buttonText="Sign in with Google"
-                  onSuccess={this.handleGoogleSuccess}
-                  onFailure={this.handleGoogleFailure}
-                  cookiePolicy={'single_host_origin'}
-                />
-
-
-                <p className="register-login-link link-left">
-=======
                  <div className="form-ftr">
                  <p className="register-login-link link-right"> 
                   <NavLink className="white-link" to="/users/register">
@@ -226,7 +206,6 @@ class Login extends Component {
                 </p>
                 <p className="register-login-link link-left"> 
                   <NavLink className="white-link" to="/users/forgot-password">
->>>>>>> origin/asma_dev
                   Forgot password?{" "}
                   </NavLink>
                 </p>
@@ -341,10 +320,6 @@ class Login extends Component {
       });
   };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/asma_dev
   componentDidMount() {
     this._isMounted = true;
     BackgroundAdd();
@@ -353,10 +328,7 @@ class Login extends Component {
       this.props.history.replace("/");
     }
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/asma_dev
   componentWillUnmount() {
     this._isMounted = false;
   }

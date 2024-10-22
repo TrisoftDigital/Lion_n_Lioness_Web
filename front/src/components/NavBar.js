@@ -227,65 +227,48 @@ class NavBar extends Component {
       );
 
       return (
-
-        <div>
-          {/* className="right hide-on-med-and-down" */}
-          <ul className=" ">
-            <li>
-              <NavLink to={"/main/search/"}>
-                {<i className="material-icons">search</i>}
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/users/profile/" + Auth.getConfirm().username}>
-                {<i className="material-icons">person</i>}
-              </NavLink>
-            </li>
-            <li>
-              <Button
-                className="MuiButton-colorInherit"
-                to="#"
-                onClick={toggleDrawer("right", true)}
-                style={{ backgroundColor: "none", borderRadius: "0px" }}
+        <ul className="right hide-on-med-and-down">
+          <li>
+            <NavLink to={"/main/search/"}>
+              {<i className="material-icons">search</i>}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={"/users/profile/" + Auth.getConfirm().username}>
+              {<i className="material-icons">person</i>}
+            </NavLink>
+          </li>
+          <li>
+            <Button
+              className="MuiButton-colorInherit"
+              to="#"
+              onClick={toggleDrawer("right", true)}
+              style={{ backgroundColor: "none", borderRadius: "0px" }}
+            >
+              <Badge
+                className={classes.margin}
+                badgeContent={this.state.nbNotifications}
+                color="secondary"
               >
-                <Badge
-                  className={classes.margin}
-                  badgeContent={this.state.nbNotifications}
-                  color="secondary"
-                >
-                  <Notifications />
-                </Badge>
-              </Button>
-              <SwipeableDrawer
-                anchor="right"
-                open={this.state.right}
-                onClose={toggleDrawer("right", false)}
-                onOpen={toggleDrawer("right", true)}
+                <Notifications />
+              </Badge>
+            </Button>
+            <SwipeableDrawer
+              anchor="right"
+              open={this.state.right}
+              onClose={toggleDrawer("right", false)}
+              onOpen={toggleDrawer("right", true)}
+            >
+              {sideList("right", listNotif)}
+            </SwipeableDrawer>
+          </li>
+          <li>
+            <NavLink to="/chat/messages">
+              <Badge
+                className={classes.margin}
+                badgeContent={this.state.nbMessages}
+                color="secondary"
               >
-<<<<<<< HEAD
-                {sideList("right", listNotif)}
-              </SwipeableDrawer>
-            </li>
-            <li>
-              <NavLink to="/chat/messages">
-                <Badge
-                  className={classes.margin}
-                  badgeContent={this.state.nbMessages}
-                  color="secondary"
-                >
-                  <MailIcon />
-                </Badge>
-              </NavLink>
-            </li>
-            <li>
-              <button className="nav-buttons" onClick={logout}>
-                Log out
-              </button>
-            </li>
-          </ul>
-        </div>
-
-=======
                 <MailIcon />
               </Badge>
             </NavLink>
@@ -296,7 +279,6 @@ class NavBar extends Component {
             </button>
           </li>
         </ul>
->>>>>>> origin/asma_dev
       );
     };
 
@@ -522,18 +504,11 @@ class NavBar extends Component {
     return (
       <div>
         <nav>
-
-          {/* className="nav-wrapper" */}
           <div className="nav-wrapper">
-            <div>
-              <NavLink to="/" className="brand-logo">
-                <img className="header-logo" src={logo} alt="" />
-              </NavLink>
-            </div>
-            <div>
-              <NavLinks />
-            </div>
-
+            <NavLink to="/" className="brand-logo">
+              <img className="header-logo" src={logo} alt="" />
+            </NavLink>
+            <NavLinks />
           </div>
         </nav>
       </div>

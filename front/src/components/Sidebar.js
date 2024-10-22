@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import "materialize-css/dist/css/materialize.min.css";
 import M from "materialize-css";
 import AuthService from "../services/AuthService";
@@ -41,9 +41,26 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-
+const baseURL = process.env.REACT_APP_BASE_URL;
 export default function Sidebar(){
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [packages, setPackages] = useState([]);
+  
+  // Fetch packages from the API
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await Axios.get(`${baseURL}/admin/get_all_packages`);
+        if (response.data) {
+          setPackages(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      }
+    };
+
+    fetchPackages();
+  }, []);
   //  const { userConnectedData } = this.props;
   // Handle change for multi-selection
   const handleChange = (event) => {
@@ -64,32 +81,28 @@ export default function Sidebar(){
               <NotificationsIcon />
             </div>
           </div> */}
-          <NavBar />
-            <div className="packages-wrapper">
-              <a href="/users/upgradeplanplatinum">
-              <div className="package-item platinum-item">
-              <p className="label"> Lion & Lioness <span className="platinum">Platinum</span></p>
+          <NavBar /> 
+          <div className="packages-wrapper">
+        {packages.map(pkg => (
+          <Link
+            to={{
+              pathname: `/users/upgradeplan/${pkg.id}`,
+              state: {
+                id: pkg.id,
+                title: pkg.title,
+                price: pkg.price,
+                duration: pkg.duration,
+              }
+            }}
+            key={pkg.id}
+          >
+            <div className={`package-item ${pkg.title.toLowerCase()}-item`}>
+              <p className="label"> Lion & Lioness <span className={pkg.title.toLowerCase()}>{pkg.title}</span></p>
               <span>Level up every action you take on Lionnlioness</span>
-              </div>
-              </a>
-              <a href="/users/upgradeplangold">
-              <div className="package-item gold-item">
-              <p className="label"> Lion & Lioness <span className="gold">Gold</span></p>
-              <span>Level up every action you take on Lionnlioness</span>
-              </div>
-              </a> <a href="/users/upgradeplanplus">
-              <div className="package-item plus-item">
-              <p className="label"> Lion & Lioness <span className="plus">Plus</span></p>
-              <span>Level up every action you take on Lionnlioness</span>
-              </div>
-              </a> 
-              <a href="/users/upgradeonenightstand">
-              <div className="package-item platinum-item">
-              <p className="label"> Upgrade Your Love Life</p>
-              <span>One Night Stand!</span>
-              </div>
-              </a>
             </div>
+          </Link>
+        ))}
+      </div>
               <h3>Menu</h3>
               <ul className="sidebar-links">
                 <li><a href="/users/posts">Posts <ArrowRightAltIcon  /> </a></li>

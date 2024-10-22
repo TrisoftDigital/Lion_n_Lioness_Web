@@ -126,17 +126,11 @@ userRouter
   userRouter
     .route("/profile/:user_id/list-profile")
     .get(userController.getUserListProfileDataFromId);
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/asma_dev
     userRouter.route('/google_signin').post(userController.googleLogin);
 
   return userRouter;
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> origin/asma_dev
 })();

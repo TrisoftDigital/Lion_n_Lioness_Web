@@ -280,11 +280,7 @@ showPosition = pos => {
     longitude: pos.coords.longitude,
     city: "null", // default city, will be replaced
     country: "null", // default country, will be replaced
-<<<<<<< HEAD
 
-
-=======
->>>>>>> origin/asma_dev
   };
 
   // Update the state with the location

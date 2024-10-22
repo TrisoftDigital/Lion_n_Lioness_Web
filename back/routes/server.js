@@ -10,19 +10,13 @@ var mainRoute = require("../routes/mainRoute");
 var chatController = require("../controllers/chatController");
 var userController = require("../controllers/userController");
 var userModel = require("../models/userModel");
+var paymentRoute = require("../routes/subscriptionRoutes")
 var Seed = require("../config/seed");
-<<<<<<< HEAD
 var adminAuth = require("../middlewares/adminAuthMiddleware")
 const path = require("path");
 const cors = require("cors");
 
 
-=======
-
-
-const cors = require('cors');
-
->>>>>>> origin/asma_dev
 /* Listenning port */
 
 const PORT = 8080;
@@ -30,13 +24,6 @@ const PORT = 8080;
 http.listen(PORT, () => {
   console.log("Listening on port: ", PORT);
 });
-//Cors Option
-const corsOption = {
-  credentials:true,
-  origin:['http://localhost:3000','http://1.1.1.111:3000'],
-
-} 
-app.use(cors(corsOption));
 
 //Cors Option
 const corsOption = {
@@ -54,6 +41,7 @@ app.use("/users/", userRoute.router);
 app.use("/chat/", chatRoute.router);
 app.use("/main/", mainRoute.router);
 app.use("/admin" ,adminRoute);
+app.use("/payment" ,paymentRoute);
 
 
 //Configuration
@@ -65,8 +53,6 @@ app.use("/chat/", chatRoute.router);
 app.use("/main/", mainRoute.router);
 
 
-
-//Configuration
 app.get("/seed", (req, res) => {
   Seed.getUserSeed();
   res.send({ message: "Database created succefully" });
