@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     userLastName: state.user.data?.lastname,
     userEmail: state.user.data?.mail,
   };
+  
 };
 
 function Payment({ userFirstName, userLastName, userEmail, userId }) {

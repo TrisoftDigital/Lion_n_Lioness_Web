@@ -267,7 +267,7 @@ const genders = [
   { value: "Two-Spirit", label: "Two-Spirit" },
 ];
 
-const Accordion = () => {
+const Accordion = ({user}) => {
   const [goals, setGoals] = useState([]);
   const [type, setType] = useState([]);
   const [language, setLanguage] = useState([]);
@@ -286,76 +286,77 @@ const Accordion = () => {
   const [sleep, setSleep] = useState(null);
   const [gender, setGender] = useState(null);
 
-//   const fetchPreferences = async () => {
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:8080/users/${user.id}/preferences`
-//       );
-//       const data = response.data.data[0];
+  const fetchPreferences = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/users/${user.id}/preferences`
+      );
+      const data = response.data.data[0];
 
-//       setGoals(JSON.parse(data.relationship_goals || "[]"));
-//       setType(JSON.parse(data.relationship_type || "[]"));
-//       setLanguage(JSON.parse(data.language || "[]"));
-//       setZodiac(JSON.parse(data.zodiac || null));
-//       setEducation(JSON.parse(data.education || null));
-//       setChildren(JSON.parse(data.children || null));
-//       setPersonality(JSON.parse(data.personality || "[]"));
-//       setCommunication(JSON.parse(data.communication || "[]"));
-//       setLove(JSON.parse(data.love || "[]"));
-//       setPets(JSON.parse(data.pets || "[]"));
-//       setDrink(JSON.parse(data.drink || "[]"));
-//       setSmoke(JSON.parse(data.smoke || "[]"));
-//       setWorkout(JSON.parse(data.workout || null));
-//       setDietary(JSON.parse(data.dietary || "[]"));
-//       setSocialMedia(JSON.parse(data.socialMedia || "[]"));
-//       setSleep(JSON.parse(data.sleep || null));
-//       setGender(JSON.parse(data.gender || null));
-//     } catch (error) {
-//       console.error("Error fetching preferences:", error);
-//     }
-//   };
+      setGoals(JSON.parse(data.relationship_goals || "[]"));
+      setType(JSON.parse(data.relationship_type || "[]"));
+      setLanguage(JSON.parse(data.language || "[]"));
+      setZodiac(JSON.parse(data.zodiac || null));
+      setEducation(JSON.parse(data.education || null));
+      setChildren(JSON.parse(data.children || null));
+      setPersonality(JSON.parse(data.personality || "[]"));
+      setCommunication(JSON.parse(data.communication || "[]"));
+      setLove(JSON.parse(data.love || "[]"));
+      setPets(JSON.parse(data.pets || "[]"));
+      setDrink(JSON.parse(data.drink || "[]"));
+      setSmoke(JSON.parse(data.smoke || "[]"));
+      setWorkout(JSON.parse(data.workout || null));
+      setDietary(JSON.parse(data.dietary || "[]"));
+      setSocialMedia(JSON.parse(data.socialMedia || "[]"));
+      setSleep(JSON.parse(data.sleep || null));
+      setGender(JSON.parse(data.gender || null));
+    } catch (error) {
+      console.error("Error fetching preferences:", error);
+    }
+  };
 
-//   useEffect(() => {
-//     fetchPreferences();
-//   }, [user.id]);
+  useEffect(() => {
+    console.log(user)
+    fetchPreferences();
+  },[user.id]);
 
-//   const handleSave = async () => {
-//     const preferences = {
-//       goals,
-//       type,
-//       language,
-//       zodiac,
-//       education,
-//       children,
-//       personality,
-//       communication,
-//       love,
-//       pets,
-//       drink,
-//       smoke,
-//       workout,
-//       dietary,
-//       socialMedia,
-//       sleep,
-//       gender,
-//     };
+  const handleSave = async () => {
+    const preferences = {
+      goals,
+      type,
+      language,
+      zodiac,
+      education,
+      children,
+      personality,
+      communication,
+      love,
+      pets,
+      drink,
+      smoke,
+      workout,
+      dietary,
+      socialMedia,
+      sleep,
+      gender,
+    };
 
-//     try {
-//       const response = await axios.post(
-//         `http://localhost:8080/users/${user.id}/${user.username}/preferences`,
-//         preferences,
-//         {
-//           headers: { "Content-Type": "application/json" },
-//         }
-//       );
-//       if (response.status === 200) {
-//         console.log("Preferences saved successfully");
-//         fetchPreferences(); // Fetch preferences again after save
-//       }
-//     } catch (error) {
-//       console.error("Error saving preferences:", error);
-//     }
-//   };
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/users/${user.id}/${user.username}/preferences`,
+        preferences,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (response.status === 200) {
+        console.log("Preferences saved successfully");
+        fetchPreferences(); // Fetch preferences again after save
+      }
+    } catch (error) {
+      console.error("Error saving preferences:", error);
+    }
+  };
 
   return (
     <div className="accordion-sidebar-wrapper">
@@ -508,7 +509,7 @@ const Accordion = () => {
           />
         </Collapse.Panel>
       </Collapse>
-      <Button type="primary" className="btn" onClick={''} style={{ marginTop: 16 }}>
+      <Button type="primary" className="btn" onClick={handleSave} style={{ marginTop: 16 }}>
         Save
       </Button>
     </div>
