@@ -14,7 +14,6 @@ import SortUserList from "../components/settings/SortUserList";
 import { FilterUsersButton } from "../components/Buttons";
 import HeartLoading from "../assets/heart-loading.gif";
 import HeartBroken from "../assets/heart-broken.gif";
-import Posts from "../components/Posts";
 
 const CancelToken = Axios.CancelToken;
 // eslint-disable-next-line
@@ -42,7 +41,7 @@ class HomeLogged extends Component {
 
   render() {
     return (
-      <div className="App right-panel-wrapper">
+      <div className="App">
         <div className="row">
           {this.props.userConnectedData.id !== undefined &&
           (this.props.userConnectedData.gender === null ||

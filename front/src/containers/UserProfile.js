@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import AuthService from "../services/AuthService";
 import NavBar from "../components/NavBar";
+import UploadPosts from "../components/UploadPosts";
 import {
   ProfileSettingsButton,
   ProfileActionsButton,
@@ -294,15 +295,28 @@ class UserProfile extends Component {
                     )}
                   </div>
                 </div>
+<<<<<<< HEAD
 
+=======
+                <div className="user-profile-box">
+                  <div className="user-profile-interests">
+>>>>>>> origin/asma_dev
                 <UserBio bio={this.state.user.bio} />
                 <Preferences user={this.state.user} />
                 <Interests tags={this.state.tags} />
                 {this.state.pictures !== undefined && (
                   <Pictures pictures={this.state.pictures} />
                 )}
+<<<<<<< HEAD
 
                 <GetuserPost user={this.state.user} />
+=======
+                </div>
+                <div className="user-profile-posts">
+                  <UploadPosts />
+                </div>
+                </div>
+>>>>>>> origin/asma_dev
               </div>
             </div>
           </div>

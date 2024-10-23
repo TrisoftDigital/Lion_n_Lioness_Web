@@ -37,7 +37,7 @@ class Chat extends Component {
             >
               {this.state.usernameOther}
             </NavLink>
-            's conversation
+            's Conversation
           </h5>
           <hr className="grey" />
           <div
@@ -56,8 +56,7 @@ class Chat extends Component {
               )}
             </div>
           </div>
-        </div>
-        <form className="fixed-bottom-imput" onSubmit={this.handleSubmit}>
+          <form className="fixed-bottom-imput" onSubmit={this.handleSubmit}>
           <div className="col s9 chat-message-box">
             <label htmlFor="msgToSend">Write your message</label>
             <input
@@ -77,6 +76,8 @@ class Chat extends Component {
             </button>
           </div>
         </form>
+        </div>
+      
       </div>
     );
   }

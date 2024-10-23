@@ -131,7 +131,7 @@ class UserCard extends Component {
   render() {
     return (
       <div className="col xs12 s6 m4">
-        <div className="card sticky-action">
+        <div className="card sticky-action user-card-container">
           <div className="card-image waves-effect waves-block waves-light user-card-image">
             <img
               className="activator"
@@ -146,11 +146,8 @@ class UserCard extends Component {
               }
               alt="Profile"
             />
-          </div>
-          <div className="card-content user-card-content">
-            <div className="user-card-below-picture">
-              <Popscore popscore={this.props.intel.pop_score} />
-              {this.state.likesProfile === true ? (
+          
+            {this.state.likesProfile === true ? (
                 <div
                   className="user-card-dislike-btn"
                   onClick={
@@ -194,8 +191,17 @@ class UserCard extends Component {
                   }
                 >
                   <FavoriteIcon />
+             
                 </div>
               )}
+                  
+           
+            <Popscore popscore={this.props.intel.pop_score} />
+          </div>
+          <div className="card-content user-card-content">
+            <div className="user-card-below-picture">
+             
+              
             </div>
             <div className="user-card-details">
               <span className="card-title activator grey-text text-darken-4 user-card-username">
@@ -278,7 +284,7 @@ class UserCard extends Component {
               className="profile-link"
               to={"/users/profile/" + this.props.intel.username}
             >
-             More Photos
+             See Profile
             </NavLink>
           </div>
           <div className="card-reveal">
