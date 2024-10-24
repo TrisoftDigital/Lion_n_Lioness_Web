@@ -58,14 +58,18 @@ const Sidebar = ({ userConnectedData }) => {
           </Link>
         ))}
       </div>
-
       <h3>Menu</h3>
-      <ul className="sidebar-links">
-        <li>
-          <a href="/users/posts">Posts <ArrowRightAltIcon /></a>
-        </li>
-        {/* Other menu items */}
-      </ul>
+              <ul className="sidebar-links">
+                <li><a href="/users/posts">Posts <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/about">About   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/followers">Followers   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/photos">Photos   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="">Find The Hotel   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/upgradeonenightstand">One Night Stand   <ArrowRightAltIcon  /> </a></li>
+                <li><a href="/users/editprofileimage">Edit Profile Image<ArrowRightAltIcon  />    </a></li>
+              </ul>
+
+              <div class="verification-btn" bis_skin_checked="1"> <a href="https://lionnlioness-v2.devservertd.com/public/verify_gmail">Click to verify your email</a></div>
 
       <h3>Account Settings</h3>
       <Accordion user={userConnectedData} />

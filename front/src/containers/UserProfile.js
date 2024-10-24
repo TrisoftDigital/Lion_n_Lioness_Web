@@ -295,28 +295,24 @@ class UserProfile extends Component {
                     )}
                   </div>
                 </div>
-<<<<<<< HEAD
-
-=======
                 <div className="user-profile-box">
                   <div className="user-profile-interests">
->>>>>>> origin/asma_dev
                 <UserBio bio={this.state.user.bio} />
                 <Preferences user={this.state.user} />
                 <Interests tags={this.state.tags} />
                 {this.state.pictures !== undefined && (
                   <Pictures pictures={this.state.pictures} />
                 )}
-<<<<<<< HEAD
+                </div>
 
-                <GetuserPost user={this.state.user} />
-=======
-                </div>
                 <div className="user-profile-posts">
-                  <UploadPosts />
+                <UploadPosts user={this.state.user}/>
+                <GetuserPost user={this.state.user} />
                 </div>
                 </div>
->>>>>>> origin/asma_dev
+
+
+
               </div>
             </div>
           </div>

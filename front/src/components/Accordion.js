@@ -267,9 +267,7 @@ const genders = [
   { value: "Two-Spirit", label: "Two-Spirit" },
 ];
 
-<<<<<<< HEAD
-const Accordion = ({user}) => {
-=======
+
 
 // Define your options as you already have them...
 
@@ -291,10 +289,9 @@ const customStyles = {
     },
   }),
 };
+const Accordion = ({user}) => {
 
 
-const Accordion = () => {
->>>>>>> origin/asma_dev
   const [goals, setGoals] = useState([]);
   const [type, setType] = useState([]);
   const [language, setLanguage] = useState([]);
@@ -556,17 +553,12 @@ const Accordion = () => {
           />
         </Collapse.Panel>
       </Collapse>
-<<<<<<< HEAD
       <Button type="primary" className="btn" onClick={handleSave} style={{ marginTop: 16 }}>
-=======
-      <div className="accordion-save-btn">
-      <Button type="primary" className="btn" onClick={''} style={{ marginTop: 16 }}>
->>>>>>> origin/asma_dev
+
         Save
       </Button>
       </div>
-    </div>
-  );
+  )
 };
 
 export default Accordion;

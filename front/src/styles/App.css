@@ -11,16 +11,6 @@ body {
 main {
   flex: 1 0 auto;
 }
-.app-container {
-  display: flex;
-}
-
-.main-content {
-  flex: 1;
-  padding: 20px;
-}
-
-/* Add styles to make the SideMenu appear on the left */
 
 .div-centered {
   padding: 20px;
@@ -72,12 +62,7 @@ nav ul a {
 }
 
 nav {
-<<<<<<< HEAD
-
-  background-color: #000 !important;
-=======
   /* background-color: #000 !important; */
->>>>>>> origin/asma_dev
 }
 
 .nav-wrapper {
@@ -400,16 +385,11 @@ background-color: #1c1c1c  !important;
 /* Toasts messages */
 
 .info-toast {
-<<<<<<< HEAD
-  background: var(--Linear, linear-gradient(90deg, #FDFCAA 0%, #7F491A 100%));
-=======
   background-color: #303231;
->>>>>>> origin/asma_dev
 }
 
 .error-toast {
-  background: var(--Linear, linear-gradient(90deg, #FDFCAA 0%, #7F491A 100%));
-
+  background-color: #ff6666;
 }
 
 .confirm-toast {
@@ -749,17 +729,9 @@ width: 100%;
 /* Profile */
 
 .card {
-
-
   overflow: visible;
 }
-.card_profile {
 
-    width: 100%;
-    position: relative;
-    background-color: white;
-
-}
 .profile-info-title {
   font-size: 25px;
   padding-bottom: 10px;
@@ -2231,11 +2203,13 @@ width: 100px;
 }
 
 .posts-wrapper .post-title-box .post-title, .user-profile-wrapper .post-title-box .post-title {
+
 background-color: #000;
 color: #fff;
 border: 1px solid #fff;
 border-radius: 5px;
 padding: 1rem;
+width: 100%;
 }
 
 .posts-wrapper .post-uploaded .post-uplaoded-details , .user-profile-wrapper .post-uploaded .post-uplaoded-details {
@@ -2562,16 +2536,11 @@ margin-top: 1rem;
 
 .upgrade-plan .packages-area .title-m span.gold {
   background: #fcb309;
-  
-}
-
-.upgrade-plan .packages-area .title-m span{
-  margin-left: 10px;
-  padding: 8px 10px;
+  padding: 10px;
   border-radius: 5px;
   line-height: 20px;
+  margin-left: 10px;
 }
-
 
 .packages-area .pakg-prices .pricebox p {
   margin: 0;
@@ -2937,6 +2906,47 @@ nav{
 
 .edit-pictures-box .picture-box .btn-star-picture-main{
 background-color: #C8B06D !important;
+}
+
+.user-profile-posts .upload-post-wrapper .post-title {
+  line-height: unset !important;
+  height: unset !important;
+  padding:  1rem;
+  text-align: left;
+  color: #fff !important;
+  background: #000 !important;
+}
+
+.uploaded-post-wrapper .MuiButton-root {
+  color: white !important;
+  border-radius: 5px;
+  background: var(--Linear, linear-gradient(90deg, #FDFCAA 0%, #7F491A 100%)) !important;
+}
+
+.uploaded-post-wrapper p, .uploaded-post-wrapper h6{
+  color: #fff;;
+}
+
+.uploaded-post-wrapper .MuiOutlinedInput-notchedOutline {
+  display: none;
+}
+
+.uploaded-post-wrapper .MuiInputLabel-formControl {
+  position: unset;
+  color: #fff !important;
+  line-height: unset;
+}
+
+.uploaded-post-wrapper .comments-container {
+  height: unset;
+}
+
+.uploaded-post-wrapper .no-comments-text { 
+  font-size: 25px;
+}
+
+.uploaded-post-wrapper .MuiInputBase-input {
+  color: #fff;
 }
 /* MEDIA QUERIES FOR RESPONSIVE */
 
@@ -3454,156 +3464,3 @@ background-color: #C8B06D !important;
     height: 250px;
   }
 }
-
-/* post style */
-/* 
-.post-image {
-  width: "100%";
-  height: "100%";
-  object-fit: "cover";
-} */
-.main{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-}
-
-.profile-wrapper{
-    display: flex;
-    width: 100%;
-    justify-content:space-between;
-}
-.profile-wrapper .left-panel{
-    flex: 0 0 25%;
-    border-right: 1px solid #222;
-    background: #171717;
-    height: 100vh;
-}
-.profile-wrapper .left-panel .head-top{
-    display: flex;
-    justify-content: space-between;
-    background: #2a2828;
-    padding: 15px 20px;
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-.profile-wrapper .left-panel .head-top .logo{
-    width:40px;
-    height: 40px;
-}
-.profile-wrapper .left-panel .links-use{
-    display: flex;
-    align-items: center;
-}
-.profile-wrapper .left-panel .head-top ul{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0;
-    padding:0;
-}
-.profile-wrapper .left-panel .head-top ul li{
-    border-right: 1px solid #ddd;
-    padding: 0 10px;
-    position: relative;
-}
-.profile-wrapper .left-panel .head-top ul li:last-child{
-    border-right:0;
-}
-.profile-wrapper .left-panel .head-top ul li .fa,
-.profile-wrapper .left-panel .head-top ul li i {
-    font-size: 15px;
-    padding: 0;
-}
-.profile-wrapper .left-panel .head-top ul li sup{
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.profile-wrapper .left-panel .head-top ul li sup span.badge.bg-danger {
-    font-size: 11px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0;
-    vertical-align: middle;
-    line-height: 18px;
-}
-.profile-wrapper .left-panel .packages{
-    padding: 30px;
-}
-.profile-wrapper .left-panel .packages .package-item a{
-    background: #fff;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 25px;
-    margin-bottom: 15px;
-    flex-direction: column;
-    color: #ccc;
-    text-decoration: none;
-}
-.profile-wrapper .left-panel .packages .package-item a .label{
-    color: #000;
-    font-size: 15px;
-    font-weight: 600;
-}
-.profile-wrapper .left-panel .packages .package-item a .label span{
-    background: #ddd;
-    color: #000;
-    padding: 0px 5px 3px 5px;
-    border-radius: 3px;
-    margin-left: 0px;
-    font-size: 13px;
-    line-height: 13px;
-}
-.profile-wrapper .left-panel .packages .package-item.gold a .label span{
-    background: #fcb309;
-}
-.profile-wrapper .left-panel .packages .package-item.plus a .label span{
-    background: #9e09fc;
-    color: #fff;
-}
-.profile-wrapper .left-panel .packages .package-item a p{
-    color: #000;
-    font-size: 13px;
-    text-align: center;
-    margin-bottom: 0;
-}
-.profile-wrapper .right-panel{
-    flex: 0 0 75%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 0 80px 0;
-    height: 100vh;
-    position: fixed;
-    width: 75%;
-    right: 0;
-}
-
-
-
-
-.profile-setting-menu .menu-wrap h3{
-    font-size:18px;
-    padding: 20px;
-    color: #fff;
-    margin-bottom: 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-

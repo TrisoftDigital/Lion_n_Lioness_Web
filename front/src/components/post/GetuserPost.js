@@ -297,7 +297,7 @@ class GetuserPost extends Component {
     } = this.state;
 
     return (
-      <div>
+      <div className="uploaded-post-wrapper">
         {posts.map((post) => {
           const totalImages = post.imagePaths ? post.imagePaths.length : 0;
           const currentImageIndex = currentIndex[post.id] || 0;

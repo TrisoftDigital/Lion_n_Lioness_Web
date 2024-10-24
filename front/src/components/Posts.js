@@ -24,7 +24,7 @@ export default function Posts() {
             <p><WatchLaterIcon /> <span> Joined 2024-09-05 09:04:45</span> </p>
             </div>
             <button>More Info</button>
-            <button>Change Password</button>
+            <button>Change Password</button> 
          </div>
          <div className='my-photos-wrapper'>
          <h2>Photos</h2>
