@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import App from "./containers/App";
 import Login from "./containers/Login";
@@ -22,21 +22,55 @@ import UpgradePlanGold from "./components/UpgradePlanGold";
 import UpgradePlanPlus from "./components/UpgradePlanPlus";
 import UpgradeOneNightStand from "./components/UpgradeOneNightStand";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
-// Layout for Sidebar + Posts
 const SidebarLayout = ({ component: Component, ...rest }) => {
-  return (
-    <div className="dashboard-wrapper" style={{ display: "flex" ,width:'100%'}} >
-      {/* Sidebar always visible */}
-      <div className="left-panel">
-         <Sidebar />
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
+  const [isMobileScreen, setMobileScreen] = useState(false);
 
-      </div>
-      {/* Child component to render */}
-      <div className="right-panel"> {/* Adjust this based on your Sidebar width */}
-      {/* <NavBar /> */}
-        <Component {...rest} />
-      </div>
+  useEffect(() => {
+    // Check if the screen size is mobile (below 768px)
+    const checkMobileScreen = () => {
+      setMobileScreen(window.innerWidth <= 767);
+    };
+
+    checkMobileScreen(); // Initial check
+
+    window.addEventListener("resize", checkMobileScreen); // Update on screen resize
+
+    return () => {
+      window.removeEventListener("resize", checkMobileScreen); // Cleanup event listener
+    };
+  }, []);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!isSidebarVisible);
+  };
+
+  return (
+    <div className="dashboard-wrapper" style={{ display: "flex", width: "100%" }}>
+    
+
+      {/* Show Sidebar only if visible or on larger screens */}
+      {isSidebarVisible || !isMobileScreen ? (
+        <div className="left-panel">
+          <Sidebar closeSidebar={toggleSidebar} />
+        </div>
+      ) : null}
+
+      {isMobileScreen && (
+        <button className="toggle-btn" onClick={toggleSidebar}>
+          {isSidebarVisible ? "Hide Sidebar" : <KeyboardBackspaceIcon />}
+        </button>
+      )}
+
+
+      {/* Conditionally hide the right panel on mobile when sidebar is visible */}
+      {!isSidebarVisible || !isMobileScreen ? (
+        <div className="right-panel">
+          <Component {...rest} />
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -1028,7 +1028,7 @@ button:focus {
 
 .user-profile-wrapper .profile-like .MuiSvgIcon-root path,
  .user-profile-wrapper .profile-dislike .MuiSvgIcon-root path,
- .user-profile-wrapper .profile-dislike .MuiSvgIcon-root path {
+ .user-profile-wrapper .profile-like-back .MuiSvgIcon-root path {
   color: #fff;
 }
 
@@ -2905,6 +2905,36 @@ nav{
 .edit-pictures-box .picture-box .btn-star-picture-main{
 background-color: #C8B06D !important;
 }
+
+.right-panel .toggle {
+  display: none ;
+}
+
+.messages-wrapper .collection-item  #grey-circle {
+  position: absolute;
+  margin-left: 0;
+}
+
+.messages-wrapper .collection-item .chat-user-avatar {
+left: 8px !important;
+}
+
+.messages-wrapper .collection.with-header .collection-item.avatar {
+  padding-left: 62px;
+}
+
+.card .card-reveal {
+  background-color: #2A2828;
+  color: #fff;
+}
+
+.card .card-reveal span, .card .card-reveal i{
+  color: #fff !important;
+}
+
+.messages-wrapper .collection .collection-item.avatar {
+min-height: unset;
+}
 /* MEDIA QUERIES FOR RESPONSIVE */
 
 @media screen and (max-width: 1000px) {
@@ -2930,19 +2960,19 @@ background-color: #C8B06D !important;
 }
 
 @media screen and (max-width: 800px) {
-  .user-card-like-btn {
+  /* .user-card-like-btn {
     width: 60px;
     left: calc(100% - 65px);
-  }
+  } */
 
-  .user-card-dislike-btn {
+  /* .user-card-dislike-btn {
     width: 30px;
     left: calc(100% - 85px);
-  }
+  } */
 
   .user-card-like-back-btn {
-    width: 60px;
-    left: calc(100% - 70px);
+    /* width: 60px;
+    left: calc(100% - 70px); */
   }
 
   .user-card-username-text {
@@ -2980,9 +3010,78 @@ background-color: #C8B06D !important;
     text-align: right;
    }
 
+   .profile-like { 
+    top: 220px; 
+   }  
+
+   .dashboard-wrapper .App .row .col.m4 {
+    width: 50%; 
+   }
+
+   .dashboard-wrapper .upgrade-plan .packages-area {
+    flex-direction: column;
+   }
+
+   .dashboard-wrapper .upgrade-plan .pakg-prices {
+    padding: 0;
+   }
+
+   .packages-wrapper {
+    padding: 15px !important;
+  }
+
+  .posts-wrapper {
+    flex-direction: column;
+  }
+
+  .posts-wrapper .posts-left-side,  .posts-wrapper .posts-right-side { 
+    width: 100% !important;
+  }
+
+  .about-card-wrapper {
+    width: 70%; 
+  } 
+
+  .edit-profile-img-card img { 
+    width: 100%;
+  }
+
+  .edit-profile-img-wrapper {
+    width: 70%;
+  }
+
+  .search-top {
+    margin: 30px;
+  }
+
+  .user-profile-wrapper, .messages-wrapper {
+    padding: 10px 15px;
+  }
+
+  .messages-wrapper{
+    padding-top: 15px;
+  }
+
+  .messages-wrapper .collection {
+    margin: 0;
+  }
+
+  .messages-wrapper .collection .collection-item.avatar {
+    min-height: unset;
+  }
+
 }
 
 @media screen and (max-width: 767px) {
+  .right-panel .toggle {
+    display: block !important;
+    margin-top: 20px;
+    margin-left: 20px;
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+
   .login-register-page {
     flex-direction: column;
   }
@@ -3016,14 +3115,21 @@ background-color: #C8B06D !important;
     padding:  0 20px;
    }
 
-
   .register-wrapper .form-ftr {
      padding: 0 10px;
   }
 
   .left-panel {
      width: 100%;
-     display: none;
+     /* display: none; */
+  }
+  .main-wrapper .left-panel-sidebar{
+    width: 100%;
+    /* display: none; */
+  }
+
+  .main-wrapper > .App {
+    width: 100% !important;
   }
 
   .right-panel, .edit-profile-img-wrapper { 
@@ -3033,7 +3139,6 @@ background-color: #C8B06D !important;
   .posts-wrapper {
     flex-direction: column;
   }
-
 
   .right-panel-wrapper .posts-wrapper .posts-left-side,
   .right-panel-wrapper .posts-wrapper .posts-right-side {
@@ -3058,6 +3163,99 @@ background-color: #C8B06D !important;
 
   .right-panel {
     height: 100vh;
+  }
+
+  .filter-users-btn {
+    top: unset;
+    left: unset !important;
+  }
+
+  .user-list-settings {
+    left: unset !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-profile-box {
+    flex-direction: column;
+  }
+
+  .user-profile-interests , .user-profile-posts{
+    width: 100%;
+  } 
+
+  .profile-like {
+    width: unset !important;
+  }
+
+  .profile-username {
+    display: flex;
+  }
+
+  .user-profile-wrapper {
+    padding: 15px;
+  }
+
+  .profile-username {
+    font-size: 24px;
+  }
+
+  .user-profile-wrapper .user-profile-posts {
+    margin: 0;
+  }
+
+  .user-profile-box {
+    gap: 0;
+  }
+
+  .right-panel,.main-wrapper > .App {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .profile-dislike .btn{
+    display: flex;
+    align-items: center;
+
+  }
+
+  .messages-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .messages-wrapper > div {
+    width: 100% !important;
+  }
+
+  .messages-wrapper {
+    padding: 15px;
+  }
+
+  .messages-wrapper .collection .collection-item.avatar {
+    min-height: unset;
+  }
+
+  .messages-wrapper   .chat-user-avatar {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .messages-wrapper .collection-item .chat-user-avatar {
+    bottom: 6px;
+  }
+
+  .messages-wrapper .collection-item #grey-circle {
+    right: 12px;
+  }
+
+  .fixed-bottom-imput .chat-message-box {
+    width: 80% !important;
+  }
+
+  .messages-wrapper .main-chat-box {
+    margin: 0 !important;
   }
 
 }
@@ -3127,19 +3325,19 @@ background-color: #C8B06D !important;
     top: 120px;
   }
 
-  .user-card-like-btn {
+  /* .user-card-like-btn {
     width: auto;
     left: calc(100% - 90px);
-  }
+  } */
 
-  .user-card-dislike-btn {
+  /* .user-card-dislike-btn {
     width: auto;
     left: calc(100% - 110px);
-  }
+  } */
 
   .user-card-like-back-btn {
-    width: auto;
-    left: calc(100% - 130px);
+    /* width: auto;
+    left: calc(100% - 130px); */
   }
 
   #login-box {
@@ -3159,12 +3357,12 @@ background-color: #C8B06D !important;
     height: 400px !important;
   }
 
-  .chat-user-title {
+  /* .chat-user-title {
     display: none !important;
-  }
-  .chat-user-status {
+  } */
+  /* .chat-user-status {
     display: none !important;
-  }
+  } */
 
   .chat-user-avatar,
   .chat-user-letters {
@@ -3211,17 +3409,17 @@ background-color: #C8B06D !important;
 
   .profile-like {
     width: 60px;
-    left: calc(100% - 85px);
+    left: calc(100% - 105px);
   }
 
   .profile-dislike {
     width: 60px;
-    left: calc(100% - 105px);
+    left: calc(100% - 124px);
   }
 
   .profile-like-back {
-    width: 108px;
-    left: calc(100% - 135px);
+    /* width: 108px; */
+    left: calc(100% - 144px);
   }
 
   .popscore {
@@ -3294,9 +3492,13 @@ background-color: #C8B06D !important;
     height: 30px !important;
   }
 
-  .collection.with-header,
+
   .collection-item.avatar {
     padding-left: 0px !important;
+  }
+
+  .messages-wrapper .collection-item.avatar {
+    padding-left: 62px !important;
   }
 
   .secondary-content {
@@ -3325,7 +3527,7 @@ background-color: #C8B06D !important;
 @media screen and (max-width: 400px) {
   .filter-users-btn {
     width: 50px !important;
-    left: -260px;
+    /* left: -260px; */
   }
 
   .filter-users-btn-txt {
@@ -3400,10 +3602,10 @@ background-color: #C8B06D !important;
     display: none;
   }
 
-  .user-card-like-btn,
+  /* .user-card-like-btn,
   .user-card-dislike-btn {
     left: calc(100% - 55px);
-  }
+  } */
 
   .user-card-like-back-btn {
     left: calc(100% - 95px);
@@ -3421,3 +3623,66 @@ background-color: #C8B06D !important;
     height: 250px;
   }
 }
+
+
+
+
+
+
+
+
+ 
+
+
+.toggle-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #000;
+  z-index: 1001;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  
+
+  .toggle-btn {
+    display: none; /* Hide the toggle button on non-mobile screens */
+  }
+}
+
+/* for left panel */
+
+/* Mobile screen styles */
+@media (max-width: 767px) {
+  
+
+  .right-panel {
+    display: block; /* Right panel shown */
+  }
+
+  .dashboard-wrapper.sidebar-open .left-panel {
+    display: block; /* Show sidebar when open */
+  }
+
+  .dashboard-wrapper.sidebar-open .right-panel {
+    display: none; /* Hide right panel when sidebar is open */
+  }
+
+  .toggle-btn {
+    display: block; /* Show toggle button on mobile screens */
+  }
+}
+
+/* For larger screens */
+@media (min-width: 768px) {
+  .toggle-btn {
+    display: none; /* Hide toggle button on larger screens */
+  }
+}
+
+@media (max-width : 767px) {
+  .sidebar-wrapper.left-panel-sidebar + .toggle-btn, .left-panel + .toggle-btn {
+   display: none !important;
+  }
+ }
